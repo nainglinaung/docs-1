@@ -14,15 +14,13 @@ Framework အသစ္တစ္ခုကို ေလ႕လာရတာကို
 - [Views & Responses](/docs/responses)
 - [Controllers](/docs/controllers)
 
-After reading through these documents, you should have a good grasp on basic request / response handling in Laravel. Next, you may wish to read about [configuring your database](/docs/database), the [fluent query builder](/docs/queries), and the [Eloquent ORM](/docs/eloquent). Or, you may wish to read about [authentication and security](/docs/security) so you can start signing people into your application.
-
-အေပၚက Documencation Link ေတြကိုဖတ္ၿပီးၿပီဆိုရင္ သင္တို႕အေနနဲ႕ Laravel ရဲ႕ request/response ေတြကိုေကာင္းေကာင္း ကိုယ္တြယ္ေျဖရွင္းႏိုင္သင္႕ပါတယ္။
+အေပၚက Documencation Link ေတြကိုဖတ္ၿပီးၿပီဆိုရင္ သင္႕အေနနဲ႕ Laravel ရဲ႕ request/response ေတြကိုေကာင္းေကာင္း ကိုယ္တြယ္ေျဖရွင္းႏိုင္သင္႕ပါတယ္။ ေနာက္ၿပီး သင္အေနနဲ႕ [Database Configuration](/docs/database) / [Eloquent ORM](/docs/eloquent) ဖတ္ဖို႕ဆုေတာင္းေကာင္းဆုေတာင္းေနမယ္လို႕ထင္ပါတယ္ အဲ႕ဒီလိုမွမဟုတ္ဘူးဆိုရင္ [authentication and security](/docs/security) ကိုေပါ႕ ဒါမွလူေတြကို သင္႕ရဲ႕ application ထဲကို singing ဝင္ခိုင္းလို႕ရမွာကိုး။
 
 <a name="laravel-philosophy"></a>
-## Laravel Philosophy
+## Laravel သေဘာတရား
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, and caching.
+Laravel က expressive, elegant syntax ျဖစ္တဲ႕ Web Application  Framework တစ္ခုျဖစ္ပါတယ္၊ ကြ်န္ေတာ္တို႕Development ကေပ်ာ္စရာေကာင္းရမယ္ဆိုတာကိုယံုၾကည္ပါတယ္၊ဖန္တီးမွု ေတြကိုလည္း စိတ္ခ်မ္းသာမွူအျပည္႕အဝေပးမယ္လို႕ယံုၾကည္ပါတယ္။ Laravel က Web projects ေတြရဲ႕အဓိကအလုပ္ေတြျဖစ္တဲ႕ authernication, routing, sessions, နဲ႕ caching ေတြကိုတက္ႏိုင္သမွ် ေလွ်ာ႕ခ်ဖို႕ႀကိဳးစားေနပါတယ္။
 
-Laravel aims to make the development process a pleasing one for the developer without sacrificing application functionality. Happy developers make the best code. To this end, we've attempted to combine the very best of what we have seen in other web frameworks, including frameworks implemented in other languages, such as Ruby on Rails, ASP.NET MVC, and Sinatra.
+Laravel က application ရဲ႕ functionality ကိုမစြန္႕လႊတ္ဘဲ က development process ကိုႏွစ္လိုဖြယ္ျဖစ္ေအာင္ရည္ရြယ္ပါတယ္။ ေပ်ာ္ေနတဲ႕ Developers ေတြက အေကာင္းဆံုး code ေတြကိုေရးသားပါတယ္။ ေနာက္ဆံုးအေနနဲ႕ .......... ၊ ကြ်န္ေတာ္တို႕သိတဲ႕အျခား web frameworks ေတြဆီက အေကာင္းဆံုး ဆိုတာေတြကိုလည္းေပါင္းခဲ႕ပါတယ္၊ ကြ်န္ေတာ္တို႕ ေပါင္းထည္႕ခဲ႕တဲ႕အျခား programming language ေတြက Ruby on Rails, ASP.NET MVC နဲ႕Sinatra , etc...
 
-Laravel is accessible, yet powerful, providing powerful tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+Laravel ကနားလည္လြယ္တယ္၊ ဟုတ္ပါတယ္ powerful လည္းျဖစ္တယ္၊ ေနာက္ ႀကီးမားရွုပ္ေထြးတဲ႕ Projects ေတြအတြက္လည္း အေကာင္းဆံုး tools ေတြကိုေထာက္ပံ႕ေနပါတယ္။ ထိပ္တန္း  ခြဲစိတ္မွူတစ္ခု control container,expressive migration system နဲ႕ tightly integrated unit testing support tools ေတြကိုသင္႕ကိုေပးထားပါတယ္ သင္ Create လုပ္ခ်င္တဲ႕ Application ကိုသင္စိတ္ႀကိဳက္လုပ္ႏိုင္ပါတယ္။
