@@ -1,4 +1,4 @@
-# မိတ္ဆက္
+# Laravel Framework မိတ္ဆက္
 
 - [ဘယ္ကေနစမလဲ](#where-to-start)
 - [Laravel သေဘာတရား](#laravel-philosophy)
