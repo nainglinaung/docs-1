@@ -87,20 +87,22 @@ foreach ($users as $user)
 var_dump($user->name);
 }
 
-#### Eloquent ျဖင့္ ေပါင္းစပ္ အသုုံးျပဳျခင္း 
+#### Eloquent ကို ေပါင္းစပ္ အသုုံးျပဳျခင္း 
 
 
-သင့္အေနျဖင့္  Query Builder function မ်ားျဖင့္ ေပါင္းစပ္ အသုုံးျပဳႏုုိင္သည္။
+သင့္အေနျဖင့္  Query Builder function မ်ားျဖင့္ Eloquent ကို ေပါင္းစပ္ အသုုံးျပဳႏုုိင္သည္။
 
 $count = User::where('votes', '>', 100)->count();
+
 
 If you are unable to generate the query you need via the fluent interface, feel free to use `whereRaw`:
 
 $users = User::whereRaw('age > ? and votes = 100', array(25))->get();
 
-#### Chunking Results
+#### Results မ်ားကုိ ခြဲထုတ္ျခင္း
 
-If you need to process a lot (thousands) of Eloquent records, using the `chunk` command will allow you to do without eating all of your RAM:
+သင့္အေနျဖင့္ ေထာင္ေပါင္းမ်ားစြာေသာ Eloquent records မ်ားကို ထုတ္ယူလုိပါက  `chunk` ဟုေသာ method ကို အသုံးျပဳ၍ Memory အသုံးျပဳမႈကုိ ေလ်ာ့ခ်ႏုိင္ပါသည္။ 
+
 
 User::chunk(200, function($users)
 {
@@ -110,20 +112,21 @@ foreach ($users as $user)
 }
 });
 
-The first argument passed to the method is the number of records you wish to receive per "chunk". The Closure passed as the second argument will be called for each chunk that is pulled from the database.
+ပထမဆုံး argument   အေနျဖင့္ မိမိတုိ ့ ပုိင္းထုတ္လုိသည့္ အေရအတြက္ကုိ ထည့္သြင္း ေပးရမည္ ျဖစ္သည္။ ဒုတိယ argument အေနျဖင့္ closure ပါဝင္မည္ျဖစ္ျပီး ထုိထဲတြင္ ထြက္ေပၚလာေသာ record တုိင္းတြင္ ျဖစ္ေပၚေစလုိသည့္  Instruction မ်ား ေရးသားႏုိင္သည္။ 
 
-#### Specifying The Query Connection
+#### Query Connection သတ္မွတ္အသုံးျပဳျခင္း
 
-You may also specify which database connection should be used when running an Eloquent query. Simply use the `on` method:
+မိမိတုိ ့ အသုံးျပဳလုိသည္ Database connection အေပၚမူတည္၍ `on` method ကုိ အသုံးျပဳကာ ေျပာင္းလဲ အသုံးျပဳႏုိင္ပါသည္။
 
 $user = User::on('connection-name')->find(1);
 
 <a name="mass-assignment"></a>
-## Mass Assignment
+## အေျမာက္အမ်ား ထည့္သြင္းျခင္း
 
-When creating a new model, you pass an array of attributes to the model constructor. These attributes are then assigned to the model via mass-assignment. This is convenient; however, can be a **serious** security concern when blindly passing user input into a model. If user input is blindly passed into a model, the user is free to modify **any** and **all** of the model's attributes. For this reason, all Eloquent models protect against mass-assignment by default.
 
-To get started, set the `fillable` or `guarded` properties on your model.
+Model အသစ္ကို တည္ေဆာက္ျပီးပါက Constructor အေနျဖင့္ ပါဝင္မည့္ attribute မ်ားကုိ array အေနျဖင့္ ထည့္သြင္းႏုိင္ပါသည္။  
+ထုိကဲ့သုိ ့ attribute မ်ား ကုိ Model မ်ားမွ တဆင့္ အေျမာက္အမ်ား ထည့္သြင္းႏုိင္ျခင္းသည္ အဆင္ေျပေသာ္လည္း User Input ကို မစစ္မေဆးပဲ အေျမာက္အမ်ားထည့္သြင္းပါက လုံျခဳံေရး ဆုိင္ရာ **ျပႆနာ** မ်ားရွိႏုိင္ပါသည္။ ထုိေၾကာင့္ default အေနျဖင့္ Eloquent Model မ်ားအားလုံးတြင္ ထုိသုိ ့
+ျပဳလုပ္ျခင္းကုိ ဖြင့္မေပးထားပါ။ သုိ ့ေသာ္ ထုိ ့သုိ ့ျပဳလုပ္ခ်င္ပါက `fillable` သုိ ့မဟုတ္ `guarded`  အစရွိသည့္ attribute မ်ားကုိ သတ္မွတ္ထားရန္ လုိေပမည္။
 
 #### Defining Fillable Attributes On A Model
 
@@ -135,11 +138,12 @@ protected $fillable = array('first_name', 'last_name', 'email');
 
 }
 
-In this example, only the three listed attributes will be mass-assignable.
+အထက္က ဥပမာတြင္ array တြင္ထည့္သြင္းထားသည့္ attribute မ်ားသည္ အေျမာက္အမ်ား ထည့္သြင္းႏုိင္သည္။
 
-#### Defining Guarded Attributes On A Model
+#### Model တြင္ တားျမစ္ attribute မ်ားအား သတ္မွတ္ျခင္း
 
-The inverse of `fillable` is `guarded`, and serves as a "black-list" instead of a "white-list":
+
+`fillable` ၏ ေျပာင္းျပန္မွာ `guarded` ျဖစ္ျပီၤး phone တစ္လုံး၏  "black-list" ကဲ့သုိ ့ အလုပ္လုပ္သည္။
 
 class User extends Eloquent {
 
@@ -149,18 +153,19 @@ protected $guarded = array('id', 'password');
 
 > **Note:** When using `guarded`, you should still never pass `Input::get()` or any raw array of user controlled input into a `save` or `update` method, as any column that is not guarded may be updated.
 
-#### Blocking All Attributes From Mass Assignment
+#### အေျမာက္အမ်ား ထည့္သြင္းျခင္းမွ တားျမစ္ျခင္း
 
-In the example above, the `id` and `password` attributes may **not** be mass assigned. All other attributes will be mass assignable. You may also block **all** attributes from mass assignment using the guard property:
+အေပၚမွ ဥပမာတြင္ `id` ႏွင့္ `password` field မ်ားမွာ အေျမာက္အမ်ား ထည့္သြင္းႏုိင္မည္ မဟုတ္ေပ။ အျခား attribute မ်ားမွာမူ အေျမာက္အမ်ား ထည့္သြင္းႏုိင္မည္ ျဖစ္သည္။ အကယ္၏ field အားလုံးကို တားျမစ္လုိပါက 
 
 protected $guarded = array('*');
 
 <a name="insert-update-delete"></a>
-## Insert, Update, Delete
+## ထည့္သြင္း ၊ ျပင္ဆင္ ၊ ဖ်က္ပစ္
 
-To create a new record in the database from a model, simply create a new model instance and call the `save` method.
+Model မွ record အသစ္ကုိ တည္ေဆာက္လုိပါက model instance တစ္ခုကို တည္ေဆာက္ျပီး  `save` method ကို အသုံးျပဳႏုိင္သည္။
 
-#### Saving A New Model
+
+#### Model တြင္ record မ်ား ထည့္သြင္းျခင္း
 
 $user = new User;
 
@@ -195,9 +200,10 @@ $user = User::firstOrCreate(array('name' => 'John'));
 // Retrieve the user by the attributes, or instantiate a new instance...
 $user = User::firstOrNew(array('name' => 'John'));
 
-#### Updating A Retrieved Model
+#### Model တစ္ခုအား Update ျပဳလုပ္ျခင္း
 
-To update a model, you may retrieve it, change an attribute, and use the `save` method:
+Model အား update ျပဳလုပ္လုိပါက ေရွးဦးစြာ ျပဳလုပ္လုိသည္ record ကုိ retrieve ျပဳလုပ္ရပါမည္။ ထုိေနာက္ attribute အား မိမိတို ့ထည့္သြင္းလုိသည့္ႏွင့္
+ေျပာင္းလဲ သတ္မွတ္ျပီး `save` method ကို အသုံးျပဳကာ update ျပဳလုပ္ႏုိင္ပါသည္။
 
 $user = User::find(1);
 
@@ -205,11 +211,12 @@ $user->email = 'john@foo.com';
 
 $user->save();
 
-#### Saving A Model And Relationships
+#### Model ႏွင့္ ၄င္း၏ Relationship မ်ားတြင္ save ျပဳလုပ္ျခင္း
 
-Sometimes you may wish to save not only a model, but also all of its relationships. To do so, you may use the `push` method:
+တခါတရံ  သင့္အေနျဖင့္ လက္ရွိ အသုံးျပဳေနသည့္ model တြင္သာ မက ၄င္းႏွင့္ relationship ျပဳလုပ္ထားေသာ Model မ်ားတြင္ပါ save လုပ္လုိသည့္ အခါမ်ားရွိေပမည္။ ထုိသုိ ့ ျပဳလုပ္လုိပါက `push` method ကုိ အသုံးျပဳႏုိင္သည္။ 
 
 $user->push();
+
 
 You may also run updates as queries against a set of models:
 
@@ -217,15 +224,15 @@ $affectedRows = User::where('votes', '>', 100)->update(array('status' => 2));
 
 > **Note:** No model events are fired when updating a set of models via the Eloquent query builder.
 
-#### Deleting An Existing Model
+#### Model မွ record မ်ားအား ဖ်က္ပစ္ျခင္း
 
-To delete a model, simply call the `delete` method on the instance:
+record တစ္ခုအား ဖ်က္ပစ္လုိပါက `delete` ဟုေသာ method ကုိ အသုံးျပဳႏိုင္သည္။
 
 $user = User::find(1);
 
 $user->delete();
 
-#### Deleting An Existing Model By Key
+#### Model မွ record မ်ားအား key အလုိက္ ဖ်က္ပစ္ျခင္း
 
 User::destroy(1);
 
@@ -233,20 +240,20 @@ User::destroy(array(1, 2, 3));
 
 User::destroy(1, 2, 3);
 
-Of course, you may also run a delete query on a set of models:
+သင့္အေနျဖင့္ query လုပ္ျပီးမွလည္း ဖ်က္ပစ္ႏုိင္ပါသည္။
 
 $affectedRows = User::where('votes', '>', 100)->delete();
 
-#### Updating Only The Model's Timestamps
+####  Model ၏ Timestamps ကုိသာ update ျပဳလုပ္ျခင္း
 
-If you wish to simply update the timestamps on a model, you may use the `touch` method:
+Model ၏ Timestamps ကုိသာ update ျပဳလုပ္လိုပါက `touch` ကုိ အသုံးျပဳႏုိင္သည္။
 
 $user->touch();
 
 <a name="soft-deleting"></a>
-## Soft Deleting
+## Soft Deleting  
 
-When soft deleting a model, it is not actually removed from your database. Instead, a `deleted_at` timestamp is set on the record. To enable soft deletes for a model, apply the `SoftDeletingTrait` to the model:
+Soft delete ျပဳလုပ္ပါက တကယ္ဖ်က္ပစ္လုိက္ျခင္း မဟုတ္ပဲ  သင့္ record ထဲတြင္  `deleted_at` ဟု timestamp တြင္ သင့္ဖ်က္ပစ္လုိက္သည့္ အခ်ိန္ကုိ မွတ္သားထားမည္ ျဖစ္သည္။ Soft delete ကုိ ထည့္သြင္းလုိပါက `SoftDeletingTrait` ကုိပါ ထည့္သြင္းရမည္ ျဖစ္သည္။
 
 use Illuminate\Database\Eloquent\SoftDeletingTrait;
 
@@ -258,47 +265,49 @@ protected $dates = ['deleted_at'];
 
 }
 
-To add a `deleted_at` column to your table, you may use the `softDeletes` method from a migration:
+`deleted_at` ဟုသည့္ column ကုိ သင့္၏ table တြင္ ထည့္သြင္းလုိပါက migration တြင္ `softDeletes` ဟုသည့္ method ကုိ အသုံးျပဳႏုိင္ပါသည္။
 
 $table->softDeletes();
 
-Now, when you call the `delete` method on the model, the `deleted_at` column will be set to the current timestamp. When querying a model that uses soft deletes, the "deleted" models will not be included in query results.
+ထုိသုိ ့ျပဳလုပ္ျပီး `delete` method ကို ေခၚယူပါက အမွန္တကယ္ ဖ်က္ပစ္မည္ မဟုတ္ပဲ `deleted_at` ဟု column တြင္ လက္ရွိ timestamp ကိုမွတ္သားထားမည္ ျဖစ္သည္။ Model တစ္ခုတြင္ soft delete ကို အသုံးျပဳထားပါက query ျပဳလုပ္ေသာ အခါတုိင္းတြင္ deleted record မ်ားမွာ ပါဝင္မည္ မဟုတ္ေပ။
 
-#### Forcing Soft Deleted Models Into Results
+#### Soft Deleted record မ်ားပါ ေရာစပ္ထုတ္ယူျခင္း
 
-To force soft deleted models to appear in a result set, use the `withTrashed` method on the query:
+
+soft deleted record မ်ားပါ ေပါင္းစပ္ ထုတ္ယူလုိပါက `withTrashed` ကုိ query တြင္ထည့္သြင္း အသုံးျပဳရမည္ ျဖစ္သည္။
 
 $users = User::withTrashed()->where('account_id', 1)->get();
 
-The `withTrashed` method may be used on a defined relationship:
+`withTrashed` method ကုိ relationship ျပဳလုပ္ထားေသာ model တြင္လည္း အသုံးျပဳႏုိင္ပါသည္။
 
 $user->posts()->withTrashed()->get();
 
-If you wish to **only** receive soft deleted models in your results, you may use the `onlyTrashed` method:
+ွSoft deleted ျပဳလုပ္ထားေသာ results မ်ားသာ ေတြ  ့ျမင္လုိပါက `onlyTrashed` ဟုေသာ method ကုိ အသုံးျပဳႏုိင္သည္။
 
 $users = User::onlyTrashed()->where('account_id', 1)->get();
 
-To restore a soft deleted model into an active state, use the `restore` method:
+soft deleted ျပဳလုပ္ထားေသာ record မ်ားကုိ restore ျပဳလုပ္လုိပါက `restore` method ကို အသုံးျပဳႏုိင္သည္။
 
 $user->restore();
 
-You may also use the `restore` method on a query:
+`restore` method ကုိ query ျပဳလုပ္ေနသည့္ အေတာအတြင္းလည္း အသုံးျပဳႏုိင္သည္။
 
 User::withTrashed()->where('account_id', 1)->restore();
 
-Like with `withTrashed`, the `restore` method may also be used on relationships:
+
+`withTrashed` ကဲ့သုိ ့ပင္ `restore` method ကိုလည္း relationship မ်ားၾကားထဲအတြင္း အသုံးျပဳႏုိင္သည္။
 
 $user->posts()->restore();
 
-If you wish to truly remove a model from the database, you may use the `forceDelete` method:
+Record တစ္ခုကို အမွန္တကယ္ database ထဲမွ ဖ်က္ပစ္လုိပါက `forceDelete` method ကုိ အသုံးျပဳႏုိင္သည္။
 
 $user->forceDelete();
 
-The `forceDelete` method also works on relationships:
+`forceDelete` method မွာလည္း relationship မ်ားအၾကား အသုံးျပဳႏုိင္သည္။
 
 $user->posts()->forceDelete();
 
-To determine if a given model instance has been soft deleted, you may use the `trashed` method:
+soft delted ျပဳလုပ္ထားျခင္း ဟုတ္မဟုတ္ စစ္ေဆးႏုိင္ရန္  `trashed` method ကုိ အသုံးျပဳႏုိင္သည္။ 
 
 if ($user->trashed())
 {
@@ -308,7 +317,7 @@ if ($user->trashed())
 <a name="timestamps"></a>
 ## Timestamps
 
-By default, Eloquent will maintain the `created_at` and `updated_at` columns on your database table automatically. Simply add these `timestamp` columns to your table and Eloquent will take care of the rest. If you do not wish for Eloquent to maintain these columns, add the following property to your model:
+ပုံမွန္အားျဖင့္ Eloquent အေနျဖင့္ `timestamp` attribute ကုိထည့္သြင္းေပးသည္ႏွင့္ `created_at` and `updated_at` ကို အလုိအေလ်ာက္ ကုိင္တြယ္ေပးမည္ ျဖစ္သည္။ သင့္အေနႏွင့္ မလုိခ်င္ပါက ေအာက္ပါအတုိင္း ေျပာင္းလဲ သတ္မွတ္ႏုိင္သည္။
 
 #### Disabling Auto Timestamps
 

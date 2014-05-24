@@ -1,9 +1,9 @@
-docs
+﻿docs
 ====
 
   
 
-> Laravel Framework Documentation ျမန္မာလို
+> Laravel Framework Documentation ျမန္မာဘာသာ
 
 -
 
@@ -14,7 +14,7 @@ docs
 - [Release Notes][3]
 - [Upgrade Guide][4]
 
->Laravel ကိုစတင္ေလ႕လာၿပီ
+>Laravel ကိုစတင္ေလ႕လာျခင္း (အေျခခံ)
 
 - [Laravel Installation][5]
 - [Configuration][6]
@@ -25,7 +25,7 @@ docs
 - [Controllers][11]
 - [Errors & Logging][12]
 
->Laravel ကိုပိုၿပီးေလ႕လာၿပီ
+>Laravel ကုိေလ့လာျခင္း (အဆင့္ျမင့္)
 
 - [Authentication][13]
 - [Billing][14]
@@ -64,7 +64,7 @@ docs
 
 >ရည္ရြယ္ခ်က္
 
-ကြ်န္ေတာ္တို႕အခုမွစၿပီး ဘာသာျပန္ေနတုန္းပါ၊ ရည္ရြယ္ခ်က္ကေတာ႕ Laravel PHP Framework Documencation ကိုျမန္မာလိုဖတ္ၿပီး Laravel Framework ကိုေကာင္းေကာင္းေလ႕လာႏိုင္ဖို႕ပါ၊
+ကြ်န္ေတာ္တို႕ အခုမွစၿပီး ဘာသာျပန္ေနတုံးပါ၊ ရည္ရြယ္ခ်က္ ကေတာ႕ Laravel PHP Framework Documencation ကို ျမန္မာလို ဖတ္ၿပီး Laravel Framework ကို အလြယ္တကူ ေလ႕လာႏိုင္ဖို႕ပါ၊
 
 > ဒီဘာသာျပန္မွုမွာ ဘယ္လိုဘာဝင္ကူညီႏိုင္လဲ
 
