@@ -1,4 +1,4 @@
-# Laravel Quickstart
+﻿# Laravel Quickstart
 
 - [Installation](#installation)
 - [Routing](#routing)
@@ -10,48 +10,49 @@
 <a name="installation"></a>
 ## Installation
 
-### Via Laravel Installer
+### Laravel Installer ကုိ အသုံးျပဳျခင္း
 
-First, download the [Laravel installer PHAR archive](http://laravel.com/laravel.phar). For convenience, rename the file to `laravel` and move it to `/usr/local/bin`. Once installed, the simple `laravel new` command will create a fresh Laravel installation in the directory you specify. For instance, `laravel new blog` would create a directory named `blog` containing a fresh Laravel installation with all dependencies installed. This method of installation is much faster than installing via Composer.
+ေရွးဦးစြာ [Laravel installer PHAR archive](http://laravel.com/laravel.phar) ကုိ ေဒါင္းပါ။  အဆင္ေျပေစရန္အတြက္ ထုိ  file ကုိ `laravel` ဟု အမည္ေပးျပီး `/usr/local/bin` ထဲသုိ ့ေျပာင္းေရြ  ့လုိက္ပါ။ ထုိေနာက္ `laravel new` command ျဖင့္ သင္ထားရွိထားေသာ directory ေပၚတြင္ laravel installation အလုိအေလ်ာက္ ျပလုပ္သြားမည္ ျဖစ္သည္။  ဥပမာ `laravel new blog` ဆုိသည့္ command ကုိအသုံးျပပါက `blog` အမည္ရွိ folder တစ္ခုကုိ တည္ေဆာက္ေပးျပီး လုိအပ္သည့္ package မ်ားကိုပါ တခါတည္း ေဒါင္းလုပ္လုပ္ကာ စုစည္းေပးသြားမည္ ျဖစ္သည္။ ၄င္းသုိ ့ install ျပဳလုပ္ျခင္းသည္ Composer မွ install လုပ္ျခင္းထက္ ပုိ၍ လ်င္ျမန္ပါလိမ့္မည္။
 
-### Via Composer
+### Composer ကို အသုံးျပဳျခင္း
 
-The Laravel framework utilizes [Composer](http://getcomposer.org) for installation and dependency management. If you haven't already, start by [installing Composer](http://getcomposer.org/doc/00-intro.md).
+Laravel framework ကုိ [Composer](http://getcomposer.org) မွလည္း installation ႏွင့္ လုိအပ္သည့္ package မ်ားကုိ ထည့္သြင္းႏုိင္သည္။ Composer မသြင္းရေသးပါက  [Composer ထည့္သြင္းျခင္းနည္းလမ္း](http://getcomposer.org/doc/00-intro.md) ကုိၾကည့္၍ ထည့္သြင္းႏုိင္ပါသည္။
 
-Now you can install Laravel by issuing the following command from your terminal:
+ထုိေနာက္ သင့္အေနျဖင့္ terminal မွ ေအာက္ပါ command ကုိ ရုိက္သြင္းျခင္းျဖင့္ Laravel ကုိ install ျပဳလုပ္ႏုိင္မည္ ျဖစ္သည္။
 
 	composer create-project laravel/laravel your-project-name --prefer-dist
 
-This command will download and install a fresh copy of Laravel in a new `your-project-name` folder within your current directory.
+၄င္း command မွ laravel အသစ္စက္စက္ ကုိ သင့္`your-project-name` folder အတြင္းတြင္ တည္ရွိေနမည္ကို ေတြ ့ရပါမည္။
 
-If you prefer, you can alternatively download a copy of the [Laravel repository from Github](https://github.com/laravel/laravel/archive/master.zip) manually. Next run the `composer install` command in the root of your manually created project directory. This command will download and install the framework's dependencies.
+ထုိတင္မက သင့္ အေနျဖင့္ [Laravel repository from Github](https://github.com/laravel/laravel/archive/master.zip) မွ ေဒါင္းေလာ့ ျပဳလုပ္ျပီး directory ထဲတြင္ `composer install` run ၍လည္း install ျပဳလုပ္ႏုိင္ပါသည္။ ထုိ command မွ framework တြင္ လုိအပ္ေသာ package မ်ားကုိ အလုိအေလ်ာက္ download ျပဳလုပ္ျပီး install သြားမည္ ျဖစ္သည္။
 
 ### Permissions
 
-After installing Laravel, you may need to grant the web server write permissions to the `app/storage` directories. See the [Installation](/docs/installation) documentation for more details on configuration.
+Laravel ကုိ install ျပဳလုပ္ျပီးပါက သင့္အေနျဖင့္ web server ၏ write permission ျဖင့္ပတ္သတ္၍ `app/storage` ထဲတြင္ ျပင္ဆင္ရန္ လုိအပ္ေကာင္း လုိအပ္ေပမည္။ အေသးစိတ္ အခ်က္အလက္ကုိ  [Installation](/docs/installation) တြင္ ၾကည့္ရႈႏုိင္ပါသည္။
 
 ### Serving Laravel
 
-Typically, you may use a web server such as Apache or Nginx to serve your Laravel applications. If you are on PHP 5.4+ and would like to use PHP's built-in development server, you may use the `serve` Artisan command:
+အၾကမ္းအားျဖင့္ Apache သုိ ့မဟုတ္ Nginx ေပၚတြင္ laravel application ကုိ တင္ထားႏုိင္သည္။  သင့္ အသုံးျပဳေသာ PHP version မွာ 5.4 အထက္ျဖစ္ျပီး PHP တြင္ပါဝင္ေသာ default server ကုိ အသုံးျပဳလုိပါက သင့္အေနျဖင့္ Artisan command ျဖစ္သည့္ `serve` ကုိ အသုံးျပဳႏုိင္သည္။
 
 	php artisan serve
 
 <a name="directories"></a>
 ### Directory Structure
 
-After installing the framework, take a glance around the project to familiarize yourself with the directory structure. The `app` directory contains folders such as `views`, `controllers`, and `models`. Most of your application's code will reside somewhere in this directory. You may also wish to explore the `app/config` directory and the configuration options that are available to you.
+Framework ကုိ install ျပဳလုပ္ျပီးေနာက္ သင့္ အေနျဖင့္ directory structure ျဖင့္ ရင္းႏွီးေနရန္ လုိေပမည္။ `app` directory ထဲတြင္ `views`, `controllers`, and `models` အစရွိသည့္ folder မ်ား တည္ရွိေနသည္ကုိ ေတြ ့ ရမည္ ျဖစ္သည္။ သင့္ application ၏ code မ်ားကုိ ထုိထဲတြင္ ေရးသားရမည္ ျဖစ္သည္။ သင့္အေနျဖင့္ လုိအပ္မည့္ configuration ႏွင့္ ပတ္သတ္၍ `app/config` အမည္ရွိ directory ထဲတြင္ၾကည့္ရႈရမည္ ျဖစ္သည္။
 
 <a name="routing"></a>
 ## Routing
 
-To get started, let's create our first route. In Laravel, the simplest route is a route to a Closure. Pop open the `app/routes.php` file and add the following route to the bottom of the file:
+ေရွးဦးစြာ Route တစ္ခုကို တည္ေဆာက္ၾကပါစို ့။  Laravel တြင္ အရုိးရွင္းဆုံး route မွာ route to Closure ျဖစ္သည္။ `app/routes.php` ကုိဖြင့္ျပီး ေအာက္ပါ code ကုိထည့္သြင္းၾကည့္ပါ။ 
 
 	Route::get('users', function()
 	{
 		return 'Users!';
 	});
 
-Now, if you hit the `/users` route in your web browser, you should see `Users!` displayed as the response. Great! You've just created your first route.
+ထုိေနာက္ web browser ေပၚတြင္ `/users` ဟူေသာ route ျဖင့္ စမ္းၾကည့္ပါက သင့္အေနျဖင့္ `Users!` တုံ ့ျပန္သည္ကို ျမင္ေတြ ့ရမည္ ျဖစ္သည္။ 
+ေကာင္းေလစြ! သင့္အေနျဖင့္ ပထမဦးစြာ route တစ္ခုကို ဖန္တီးလုိက္ျပီ ျဖစ္သည္။
 
 Routes can also be attached to controller classes. For example:
 

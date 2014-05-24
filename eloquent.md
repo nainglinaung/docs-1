@@ -319,7 +319,7 @@ if ($user->trashed())
 
 ပုံမွန္အားျဖင့္ Eloquent အေနျဖင့္ `timestamp` attribute ကုိထည့္သြင္းေပးသည္ႏွင့္ `created_at` and `updated_at` ကို အလုိအေလ်ာက္ ကုိင္တြယ္ေပးမည္ ျဖစ္သည္။ သင့္အေနႏွင့္ မလုိခ်င္ပါက ေအာက္ပါအတုိင္း ေျပာင္းလဲ သတ္မွတ္ႏုိင္သည္။
 
-#### Disabling Auto Timestamps
+#### အလုိအေလ်ာက္ Timestamps ျပဳလုပ္ျခင္းမွ ဖယ္ရွားျခင္း
 
 class User extends Eloquent {
 
@@ -329,9 +329,9 @@ public $timestamps = false;
 
 }
 
-#### Providing A Custom Timestamp Format
+#### စိတ္ၾကိဳက္ Timestamp တစ္ခုသတ္မွတ္ျခင္း
 
-If you wish to customize the format of your timestamps, you may override the `getDateFormat` method in your model:
+Timestamp တစ္ခုကို စိတ္ၾကိဳက္သတ္မွတ္လုိပါက model အတြင္းရွိ `getDateFormat` ကုိ အသုံးျပဳ၍ သတ္မွတ္ႏုိင္သည္။
 
 class User extends Eloquent {
 
@@ -345,9 +345,10 @@ return 'U';
 <a name="query-scopes"></a>
 ## Query Scopes
 
-#### Defining A Query Scope
+#### Query Scope တစ္ခုအား သတ္မွတ္ျခင္း
 
-Scopes allow you to easily re-use query logic in your models. To define a scope, simply prefix a model method with `scope`:
+Scope မ်ားမွာ သင့္၏ query logic မ်ားကို ထပ္ခါထပ္ခါ အသုံးျပဳႏုိင္ျခင္း ျဖင့္ သက္သာေစသည္။  Scope တစ္ခုကုိ ဖန္တီးႏုိင္ရင္ `scope` ဟုပါဝင္သည့္ 
+method တစ္ခုကုိ ဖန္တီးရန္ လုိေပမည္။
 
 class User extends Eloquent {
 
@@ -363,13 +364,13 @@ return $query->whereGender('W');
 
 }
 
-#### Utilizing A Query Scope
+#### Query Scope တစ္ခုအား အသုံးျပဳျခင္း 
 
 $users = User::popular()->women()->orderBy('created_at')->get();
 
-#### Dynamic Scopes
+#### Scopes အရွင္မ်ား ဖန္တီးျခင္း
 
-Sometimes You may wish to define a scope that accepts parameters. Just add your parameters to your scope function:
+တခါတရံ သင့္အေနျဖင့္ parameter မ်ားလက္ခံေသာ scope အရွင္မ်ားကို ဖန္တီးလုိေပမည္။ ထုိသုိ ့ျပဳလုပ္ႏုိင္ရန္ သင့္၏ scope function အတြင္းတြင္
 
 class User extends Eloquent {
 
@@ -380,14 +381,14 @@ return $query->whereType($type);
 
 }
 
-Then pass the parameter into the scope call:
+ထိုေနာက္ scope တြင္ parameter ကုိ ထည့္သြင္း အသုံးျပဳႏုိင္သည္။
 
 $users = User::ofType('member')->get();
 
 <a name="relationships"></a>
 ## Relationships
 
-Of course, your database tables are probably related to one another. For example, a blog post may have many comments, or an order could be related to the user who placed it. Eloquent makes managing and working with these relationships easy. Laravel supports many types of relationships:
+Database table မ်ားမွာ တခါတရံ တစ္ခုႏွင့္ တစ္ခု ဆက္စပ္ျပီး တည္ရွိႏုိင္ေပသည္။ ဥပမာ Blog post တစ္ခုတြင္ comment မ်ားစြာ ပါဝင္သကဲ့သုိ ့  Order တစ္ခုတြင္လည္း User တစ္ေယာက္ႏွင့္ ဆက္စပ္ႏုိင္ ေပသည္။ Laravel အေနျဖင့္ ဆက္စပ္မႈ မ်ိဳးစုံကုိ ေဆာင္ရြက္ႏုိင္ေအာင္ ကူညီေပးထားပါသည္။
 
 - [One To One](#one-to-one)
 - [One To Many](#one-to-many)
@@ -399,9 +400,10 @@ Of course, your database tables are probably related to one another. For example
 <a name="one-to-one"></a>
 ### One To One
 
-#### Defining A One To One Relation
+#### One To One Relation တစ္ခုကုိ တည္ေဆာက္ျခင္း
 
-A one-to-one relationship is a very basic relation. For example, a `User` model might have one `Phone`. We can define this relation in Eloquent:
+one-to-one relationship မွာ အလြန္ပင္ အေျခခံက်ေသာ relation ျဖစ္သည္။  ဥပမာ User တစ္ေယာက္တြင္ Phone တစ္လုံး ရွိရမည့္ အေနအထားမ်ိဳး။ 
+ထုိသုိ ့ေသာ relation မ်ိဳးကို Eloquent တြင္ ဖန္တီးႏုိင္ေပသည္။
 
 class User extends Eloquent {
 
@@ -412,25 +414,26 @@ return $this->hasOne('Phone');
 
 }
 
-The first argument passed to the `hasOne` method is the name of the related model. Once the relationship is defined, we may retrieve it using Eloquent's [dynamic properties](#dynamic-properties):
+
+`hasOne` တြင္ထည့္သြင္းရမည့္ argument မွာ ဆက္စပ္ေနသည့္ Model ၏ အမည္ပင္ျဖစ္သည္။ relationship တည္ေဆာက္ျပီးသည္ႏွင့္ Eloquent ၏ [dynamic properties](#dynamic-properties): ကုိ အသုံးျပဳျပီး အခ်က္အလက္မ်ားကုိ ထုတ္ယူႏုိင္သည္။
 
 $phone = User::find(1)->phone;
 
-The SQL performed by this statement will be as follows:
+အထက္ပါ statement အတြက္ run သြားမည့္ SQL မွာ ေအာက္ပါ အတုိင္းျဖစ္သည္။
 
 select * from users where id = 1
 
 select * from phones where user_id = 1
 
-Take note that Eloquent assumes the foreign key of the relationship based on the model name. In this case, `Phone` model is assumed to use a `user_id` foreign key. If you wish to override this convention, you may pass a second argument to the `hasOne` method. Furthermore, you may pass a third argument to the method to specify which local column that should be used for the association:
+Eloquent အေနျဖင့္ model name မ်ားကို အေျခခံျပီး Forigen key မ်ားကို သတ္မွတ္သြားမည္ကုိ သတိျပဳရမည္။ အထက္က `Phone` model တြင္ `user_id` ကုိ foreign key အေနျဖင့္ အလုိအေလ်ာက္ သတ္မွတ္မည္ ျဖစ္သည္။  မိမိတုိ ့ စိတ္ၾကိဳက္ေျပာင္းလဲလုိပါက `hasOne` method တြင္ ဒုတိယ argument အျဖစ္သြင္းေပးရန္ လုိေပမည္။  ထုိထက္ပုိ၍ တတိယ argument အေနျဖင့္ ထည့္သြင္းပါက မည္သည့္ local column ကုိ ပူးေပါင္းမည္ကုိပါ သတ္မွတ္ႏုိင္သည္။
 
 return $this->hasOne('Phone', 'foreign_key');
 
 return $this->hasOne('Phone', 'foreign_key', 'local_key');
 
-#### Defining The Inverse Of A Relation
+#### Relation ေျပာင္းျပန္သတ္မွတ္ျခင္း
 
-To define the inverse of the relationship on the `Phone` model, we use the `belongsTo` method:
+`Phone` model မွ Relation ကုိ ေျပာင္းျပန္အေနျဖင့္ သတ္မွတ္လုိပါက `belongsTo` ဟုသည့္ method ကုိ အသုံးျပဳႏုိင္သည္။
 
 class Phone extends Eloquent {
 
@@ -441,7 +444,8 @@ return $this->belongsTo('User');
 
 }
 
-In the example above, Eloquent will look for a `user_id` column on the `phones` table. If you would like to define a different foreign key column, you may pass it as the second argument to the `belongsTo` method:
+အထက္က ဥပမာတြင္ Eloquent အေနျဖင့္ `phones` table မွ `user_id` column ကုိ အသုံးျပဳမည္ ျဖစ္သည္။ `hasMany` ကဲ့သုိ ့ပင္ Foriegn Key ကုိ သတ္မွတ္လုိပါက ဒုတိယ argument ကုိ ထည့္သြင္းေပးႏုိင္သည္။
+
 
 class Phone extends Eloquent {
 
@@ -452,7 +456,7 @@ return $this->belongsTo('User', 'local_key');
 
 }
 
-Additionally, you pass a third parameter which specifies the name of the associated column on the parent table:
+ထုိအျပင္ parent table ႏွင့္ဆက္စပ္ေနသည့္  column ကုိ တတိယ parameter အျဖစ္ ထည့္သြင္းႏုိင္သည္။
 
 class Phone extends Eloquent {
 
@@ -466,7 +470,8 @@ return $this->belongsTo('User', 'local_key', 'parent_key');
 <a name="one-to-many"></a>
 ### One To Many
 
-An example of a one-to-many relation is a blog post that "has many" comments. We can model this relation like so:
+one-to-many relation ၏ ဥပမာမွာ blog post တစ္ခုတြင္ comment မ်ားစြာ ရွိသကဲ့သုိ ့ပင္ ျဖစ္သည္။ ထုိသုိ ့ relation ကုိ ေအာက္ပါအတုိင္း model တြင္
+သတ္မွတ္ႏုိင္သည္။
 
 class Post extends Eloquent {
 
@@ -477,23 +482,23 @@ return $this->hasMany('Comment');
 
 }
 
-Now we can access the post's comments through the [dynamic property](#dynamic-properties):
+ထုိအခါ post comments မ်ားကို [dynamic property](#dynamic-properties) ကုိ အသုံးျပဳ၍ ထုတ္ယူႏုိင္ပါျပီ။
 
 $comments = Post::find(1)->comments;
 
-If you need to add further constraints to which comments are retrieved, you may call the `comments` method and continue chaining conditions:
+ထုိထဲမွ  ထုတ္ယူလုိသည့္ comment မ်ားကုိ စစ္ယူလုိပါက `comments` method ေနာက္တြင္ method မ်ားကုိ စီတန္း အသုံးျပဳႏုိင္ပါေသးသည္။
 
 $comments = Post::find(1)->comments()->where('title', '=', 'foo')->first();
 
-Again, you may override the conventional foreign key by passing a second argument to the `hasMany` method. And, like the `hasOne` relation, the local column may also be specified:
+၄င္းတြင္လည္း `hasOne` ကဲ့သုိ ့ foriegn key ကုိ  `hasMany` method  ေနာက္တြင္ second argument အေနျဖင့္ႏွင့္  third argument ကို local key အေနျဖင့္ ထည့္သြင္းႏုိင္ေပသည္။
 
 return $this->hasMany('Comment', 'foreign_key');
 
 return $this->hasMany('Comment', 'foreign_key', 'local_key');
 
-#### Defining The Inverse Of A Relation
+#### ေျပာင္းျပန္ relation သတ္မွတ္ျခင္း
 
-To define the inverse of the relationship on the `Comment` model, we use the `belongsTo` method:
+`Comment` model ေျပာင္းျပန္ သတ္မွတ္ႏုိင္ရန္  `belongsTo` ဟုသည့္ method ကုိ အသုံးျပဳႏုိင္သည္။
 
 class Comment extends Eloquent {
 
@@ -507,9 +512,12 @@ return $this->belongsTo('Post');
 <a name="many-to-many"></a>
 ### Many To Many
 
-Many-to-many relations are a more complicated relationship type. An example of such a relationship is a user with many roles, where the roles are also shared by other users. For example, many users may have the role of "Admin". Three database tables are needed for this relationship: `users`, `roles`, and `role_user`. The `role_user` table is derived from the alphabetical order of the related model names, and should have `user_id` and `role_id` columns.
 
-We can define a many-to-many relation using the `belongsToMany` method:
+Many-to-many relations မွာ ပုိမိုရႈပ္ေထြးသည့္ relation ျဖစ္သည္။ ဥပမာ User တစ္ေယာက္မွာ တာဝန္မ်ားစြာ ရွိျပီး တာဝန္တစ္ခုကိုလည္း User မ်ားစြာ ခြဲေဝေပးအပ္ထားသည္ ဆုိပါစုိ ့။  User မ်ားစြာ  "Admin" တာဝန္ကုိ ယူထားႏုိင္သည့္ အေျခအေနတြင္ရွိေပမည္။  ထုိသုိ ့ေသာ အေျခအေနတြင္ Database 
+Table သုံးခု လုိအပ္မည္ ျဖစ္သည္။ ၄င္းတုိ ့မွာ `users` ၊ `roles` ႏွင့္ `role_user` တုိ ့ျဖစ္ၾကသည္။ `role_user` table မွာ ဆက္စပ္ေနသည့္ model အမည္မ်ားကုိ ဆက္စပ္ေပးမည္ ျဖစ္ျပီး ၄င္းတြင္ `user_id` ႏွင့္ `role_id` ဟူေသာ columns ႏွစ္ခု ပါဝင္မည္ ျဖစ္သည္။
+
+
+many-to-many relation  ကုိ  `belongsToMany` method ကုိ အသုံးျပဳ၍ ေရးသားႏုိင္သည္။
 
 class User extends Eloquent {
 
@@ -520,19 +528,19 @@ return $this->belongsToMany('Role');
 
 }
 
-Now, we can retrieve the roles through the `User` model:
+ထုိအခါ `User` မွ role ကုိ ေအာက္ပါ အတုိင္း ထုတ္ယူႏုိင္မည္ ျဖစ္သည္။
 
 $roles = User::find(1)->roles;
 
-If you would like to use an unconventional table name for your pivot table, you may pass it as the second argument to the `belongsToMany` method:
+မိမိ၏ ၾကားခံ table ၏ အမည္ကုိ စိတ္ၾကိဳက္ သတ္မွတ္လုိပါက `belongsToMany` method ၏ ဒုတိယ argument မွ သြင္း၍ စိတ္ၾကိဳက္ သတ္မွတ္ႏုိင္သည္။
 
 return $this->belongsToMany('Role', 'user_roles');
 
-You may also override the conventional associated keys:
+ထုိအျပင္ ပါဝင္ပတ္သတ္ေနေသာ Keys မ်ားကိုလည္း စိတ္ၾကိဳက္ သတ္မွတ္ႏုိင္သည္။
 
 return $this->belongsToMany('Role', 'user_roles', 'user_id', 'foo_id');
 
-Of course, you may also define the inverse of the relationship on the `Role` model:
+ထုိအျပင္ `Role` model မွလည္း ေျပာင္းျပန္သတ္မွတ္ ၍လည္း ျဖစ္ပါသည္။
 
 class Role extends Eloquent {
 
@@ -546,7 +554,7 @@ return $this->belongsToMany('User');
 <a name="has-many-through"></a>
 ### Has Many Through
 
-The "has many through" relation provides a convenient short-cut for accessing distant relations via an intermediate relation. For example, a `Country` model might have many `Posts` through a `Users` model. The tables for this relationship would look like this:
+ "has many through"  ေဝးကြာေနသည့္ relation မ်ားမွ record မ်ားကုိ access လုပ္ႏုိင္ရန္ အလြယ္တကူ ၾကားျဖတ္ေဆာင္ရြက္ေပးေသာ method ျဇစ္သည္။ ဥပမာ  `Country` model မွာ  `Posts` ျဖင့္ ခ်ိတ္ဆက္ထားျခင္း မရွိေသာ္လည္း `Users` model ျဖင့္မူ ခ်ိတ္ဆက္ထားပါက တဆင့္ေက်ာ္၍ access လုပ္ႏုိင္သည္။  ထုိ table မ်ား၏  relationship မွာ ေအာက္ပါအတုိင္း ဆုိပါစို ့
 
 countries
 id - integer
@@ -562,7 +570,7 @@ id - integer
 user_id - integer
 title - string
 
-Even though the `posts` table does not contain a `country_id` column, the `hasManyThrough` relation will allow us to access a country's posts via `$country->posts`. Let's define the relationship:
+`posts` table တြင္ `country_id` column မပါဝင္ေသာ္လည္း `hasManyThrough` relation ျဖင့္ `$country->posts` ဟု၍ accessible ျဖစ္ေအာင္ စြမ္းေဆာင္ႏုိင္ေပသည္။ 
 
 class Country extends Eloquent {
 
@@ -573,7 +581,7 @@ return $this->hasManyThrough('Post', 'User');
 
 }
 
-If you would like to manually specify the keys of the relationship, you may pass them as the third and fourth arguments to the method:
+relationship key မ်ားကုိ စိတ္ၾကိဳက္သတ္မွတ္လုိပါက တတိယႏွင့္ စတုတၳ parameter အမ်ားအျဖစ္ ထည့္သြင္းႏုိင္ေပသည္။
 
 class Country extends Eloquent {
 
@@ -587,7 +595,9 @@ return $this->hasManyThrough('Post', 'User', 'country_id', 'user_id');
 <a name="polymorphic-relations"></a>
 ### Polymorphic Relations
 
-Polymorphic relations allow a model to belong to more than one other model, on a single association. For example, you might have a photo model that belongs to either a staff model or an order model. We would define this relation like so:
+Polymorphic relations ကုိ အသုံးျပဳျခင္းျဖင့္ အျခား Model တစ္ခုထက္ပုိ၍ associate ျပဳလုပ္ထားေသာ record မ်ားကို ထုတ္ယူႏုိင္သည္။ ဥပမာ သင့္တြင္ 
+staff ဟုေသာ model ႏွင့္ order ဟုေသာ model ႏွစ္ခုလုံးႏွင့္ ပတ္သတ္ေနသည့္ photo ဟုေသာ model ရွိသည္ ဆုိပါစုိ ့။
+
 
 class Photo extends Eloquent {
 
@@ -616,9 +626,9 @@ return $this->morphMany('Photo', 'imageable');
 
 }
 
-#### Retrieving A Polymorphic Relation
+#### Polymorphic Relation ကုိ အသုံးျပဳျခင္း
 
-Now, we can retrieve the photos for either a staff member or an order:
+ေအာက္ပါ အတုိင္း photo မ်ားကို Staff member မ်ားမွေသာ္လည္းေကာင္း  Order မွေသာ္လည္းေကာင္း ထုတ္ယူႏုိင္သည္။
 
 $staff = Staff::find(1);
 
@@ -627,19 +637,20 @@ foreach ($staff->photos as $photo)
 //
 }
 
-#### Retrieving The Owner Of A Polymorphic Relation
+#### Polymorphic Relation မွ Owner ၏ record မ်ားကုိ ထုတ္ယူျခင္း
 
-However, the true "polymorphic" magic is when you access the staff or order from the `Photo` model:
+သုိ ့ေသာ္ တကယ့္ "polymorphic" အလွတရားမွာ `Photo` model မွ staff ျဖစ္ေစ ၊ order ျဖစ္ေစ ထုတ္ယူႏုိင္ျခင္း ျဖစ္သည္။
+
 
 $photo = Photo::find(1);
 
 $imageable = $photo->imageable;
 
-The `imageable` relation on the `Photo` model will return either a `Staff` or `Order` instance, depending on which type of model owns the photo.
+`Photo` model မွ `imageable` relation  မွာ `Staff` မွျဖစ္ေစ `Order` instance ျဖစ္ေစ ပိုင္ဆုိင္သည့္ model ေပၚမူတည္၍ ထုတ္ေပးသြားမည္ ျဖစ္သည္။
 
 #### Polymorphic Relation Table Structure
 
-To help understand how this works, let's explore the database structure for a polymorphic relation:
+မည္သုိ ့မည္ပုံ အလုပ္လုပ္ေဆာင္သြားသည္ကုိ သိရွိႏုိင္ရန္ ေအာက္ပါ database structure ကုိ ၾကည့္ရႈႏုိင္ပါသည္။
 
 staff
 id - integer

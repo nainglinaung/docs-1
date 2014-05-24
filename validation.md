@@ -1,6 +1,6 @@
-# Validation
+﻿# စိစစ္ျခင္း
 
-- [Basic Usage](#basic-usage)
+- [အေျခခံအသုံးျပဳပုံ](#basic-usage)
 - [Working With Error Messages](#working-with-error-messages)
 - [Error Messages & Views](#error-messages-and-views)
 - [Available Validation Rules](#available-validation-rules)
@@ -9,11 +9,12 @@
 - [Custom Validation Rules](#custom-validation-rules)
 
 <a name="basic-usage"></a>
-## Basic Usage
+## အေျခခံအသုံးျပဳပုံ
 
+Laravel အေနျဖင့္ data မ်ားကုိ စိစစ္ရာတြင္ ရုိးရွင္း အဆင္ေျပေသာ 
 Laravel ships with a simple, convenient facility for validating data and retrieving validation error messages via the `Validation` class.
 
-#### Basic Validation Example
+#### အေျခခံအသုံးျပဳပုံ ဥပမာ
 
 	$validator = Validator::make(
 		array('name' => 'Dayle'),
