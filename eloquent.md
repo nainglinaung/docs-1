@@ -1,7 +1,7 @@
 # Eloquent ORM
 
-- [Introduction](#introduction)
-- [Basic Usage](#basic-usage)
+- [အၾကမ္းဖ်င္း](#အၾကမ္းဖ်င္း)
+- [အေျခခံအသုုံးျပဳပုုံ](#အေျခခံအသုုံးျပဳပုုံ)
 - [Mass Assignment](#mass-assignment)
 - [Insert, Update, Delete](#insert-update-delete)
 - [Soft Deleting](#soft-deleting)
@@ -21,92 +21,94 @@
 - [Converting To Arrays / JSON](#converting-to-arrays-or-json)
 
 <a name="introduction"></a>
-## Introduction
+## အၾကမ္းဖ်င္း
 
-The Eloquent ORM included with Laravel provides a beautiful, simple ActiveRecord implementation for working with your database. Each database table has a corresponding "Model" which is used to interact with that table.
+Laravel တြင္ပါဝင္သည့္ ရုုိးရွင္းျပီး လွပသပ္ရပ္ေသာ Eloquent ORM သည္  သင့္ Database ကုုိ ActiveRecord ျဖင့္ အေျခခံထား သျဖင့္ အလြယ္တကူပင္ အသုုံးျပဳႏုုိင္မည္ ျဖစ္သည္။ Database မွ Table တစ္ခုုတုုိင္းကုုိ Model တစ္ခုု အေနျဖင့္ သတ္မွတ္ကာ အသုုံးျပဳရမည္ ျဖစ္သည္။ 
 
-Before getting started, be sure to configure a database connection in `app/config/database.php`.
+အသုုံးမျပဳခင္ ပထမဆုုံး အေနျဖင့္ `app/config/database.php` သုုိ ့သြားေရာက္ကာ ၾကိဳတင္ ျပင္ဆင္ရမည္ ျဖစ္သည္။ 
 
 <a name="basic-usage"></a>
-## Basic Usage
+## အေျခခံအသုုံးျပဳပုုံ
 
-To get started, create an Eloquent model. Models typically live in the `app/models` directory, but you are free to place them anywhere that can be auto-loaded according to your `composer.json` file.
+စတင္ အသုုံးျပဳရန္ Eloquent model တစ္ခုုကိုု တည္ေဆာက္ရမည္ ျဖစ္သည္။ ပုုံမွန္အားျဖင့္ Models file မ်ားမွာ `app/models` အမည္ရွိသည့္ Folder ထဲတြင္ တည္ရွိမည္ ျဖစ္ေသာ္လည္း အလ်ဥ္းသင့္သလုုိ ျပင္ဆင္ႏုုိင္မည္ျဖစ္သည္။ ထုုိသုုိ ့ျပင္ဆင္ႏုုိင္ရန္ အတြက္ `composer.json` ထဲတြင္ မိမိတုုိ ့  autoload လုုပ္ခ်င္သည့္ file ၏ အမည္ႏွင့္ တည္ေနရာကိုု ထည့္သြင္းထားရမည္ ျဖစ္သည္။ 
 
-#### Defining An Eloquent Model
 
-	class User extends Eloquent {}
+#### Eloquent Model တစ္ခုု Define ျပဳလုုပ္ျခင္း
 
-Note that we did not tell Eloquent which table to use for our `User` model. The lower-case, plural name of the class will be used as the table name unless another name is explicitly specified. So, in this case, Eloquent will assume the `User` model stores records in the `users` table. You may specify a custom table by defining a `table` property on your model:
+class User extends Eloquent {}
 
-	class User extends Eloquent {
+Eloquent Model တြင္ မည့္သည့္ table ကုုိ အသုုံးျပဳမည္ကုုိ မေၾကညာ ထားပါက Model အမည္၏ အမ်ားကိန္း ကုုိ အသုုံးျပဳမည္ ျဖစ္သည္။ ဥပမာ User.php ဟုု ေၾကညာထားပါက Users table ဟုု အလုုိအေလ်ာက္ သတ္မွတ္မည္ ျဖစ္သည္။ သုုိ ့မဟုုတ္ပဲ မိမိ စိတ္ၾကိဳက္ အသုုံးျပဳလုုိပါက ေအာက္ပါ အတုုိင္း သတ္မွတ္ႏုုိင္မည္ ျဖစ္သည္။ 
 
-		protected $table = 'my_users';
+class User extends Eloquent {
 
-	}
+protected $table = 'my_users';
 
-> **Note:** Eloquent will also assume that each table has a primary key column named `id`. You may define a `primaryKey` property to override this convention. Likewise, you may define a `connection` property to override the name of the database connection that should be used when utilizing the model.
+}
 
-Once a model is defined, you are ready to start retrieving and creating records in your table. Note that you will need to place `updated_at` and `created_at` columns on your table by default. If you do not wish to have these columns automatically maintained, set the `$timestamps` property on your model to `false`.
+> **မွတ္ခ်က္:** Eloquent အေနျဖင့္ Primary Key column ဟုု `id` ဟုု အလုုိအေလ်ာက္ သတ္မွတ္ျဖစ္ေသာ္လည္း အထက္က ကဲ့သုုိ ့ပင္ မိမိစိတ္ၾကိဳက္ column ကုုိ သတ္မွတ္ႏုုိင္သည္။ ထုုိကဲ့သုုိ ့ Database Connection ကုုိ `connection` ဟုုသည္ property ကုုိ အသုုံးျပဳ ထပ္မံ သတ္မွတ္ႏုုိင္မည္ ျဖစ္သည္။ 
 
-#### Retrieving All Models
+Model ကုုိ သတ္မွတ္ျပီးသည္ႏွင့္ မိမိတုုိ ့ အလုုိရွိသည့္ record မ်ားကုုိ စတင္ တည္ေဆာက္ျခင္း ၊ ထုုတ္ယူျခင္းမ်ား ျပဳလုုပ္ႏုုိင္ျပီ ျဖစ္သည္။  သတိျပဳရမည့္ တစ္ခ်က္မွာ `updated_at` ႏွင့္ `created_at` ဆုုိသည့္ columns မ်ားမွာ သင့္ table တြင္ အလုုိအေလ်ာက္ ပါဝင္မည္ျဖစ္သည္။ သင့္ အေနျဖင့္ အလုုိမရွိပါက model အတြင္းရွိ `$timestamps`ဟုုသည္ property ကုုိ `false` ဟုု ေပးထားရန္ လုုိေပမည္။
 
-	$users = User::all();
+#### Model အတြင္းမွ record အားလုုံး ထုုတ္ယူျခင္း
 
-#### Retrieving A Record By Primary Key
+$users = User::all();
 
-	$user = User::find(1);
+#### Model အတြင္း record မ်ားအား primary key ကုုိ အသုုံးျပဳကာ ထုုတ္ယူျခင္း
 
-	var_dump($user->name);
+$user = User::find(1);
 
-> **Note:** All methods available on the [query builder](/docs/queries) are also available when querying Eloquent models.
+var_dump($user->name);
 
-#### Retrieving A Model By Primary Key Or Throw An Exception
+> **Note:**  [query builder] တြင္ အသုုံးျပဳႏုုိင္သည့္ method မ်ား အားလုုံး (/docs/queries) Eloquent models တြင္လည္း ဆက္လက္ အသုုံးျပဳႏုုိင္မည္ ျဖစ္သည္။ 
 
-Sometimes you may wish to throw an exception if a model is not found, allowing you to catch the exceptions using an `App::error` handler and display a 404 page.
+#### Model အတြင္း record မ်ားအား primary key ကုုိ အသုုံးျပဳကာ ထုုတ္ယူျပီး မရွိပါက Exception ျဖင့္ ျပသျခင္း
 
-	$model = User::findOrFail(1);
+တခါတရံ သင့္ အေနျဖင့္ Model မွ data မ်ား ရွာမေတြ ့ပါက Exception အေနျဖင့္ ျပသခ်င္မည္ ျဖစ္သည္။ ထုုိသုုိ ့ ျပဳလုုပ္ႏဳိင္ရန္ `App::error` ဟုုေသာ handler ကုုိ အသုုံးျပဳျပီး 404 page ကုုိ လြဲေျပာင္းျပသႏုုိင္မည္ ျဖစ္သည္။
 
-	$model = User::where('votes', '>', 100)->firstOrFail();
+$model = User::findOrFail(1);
+
+$model = User::where('votes', '>', 100)->firstOrFail();
 
 To register the error handler, listen for the `ModelNotFoundException`
 
-	use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-	App::error(function(ModelNotFoundException $e)
-	{
-		return Response::make('Not Found', 404);
-	});
+App::error(function(ModelNotFoundException $e)
+{
+return Response::make('Not Found', 404);
+});
 
-#### Querying Using Eloquent Models
+#### Querying Using Eloquent Models ကုုိ အသုုံးျပဳကာ Query မ်ားေရးသားျခင္း
 
-	$users = User::where('votes', '>', 100)->take(10)->get();
+$users = User::where('votes', '>', 100)->take(10)->get();
 
-	foreach ($users as $user)
-	{
-		var_dump($user->name);
-	}
+foreach ($users as $user)
+{
+var_dump($user->name);
+}
 
-#### Eloquent Aggregates
+#### Eloquent ျဖင့္ ေပါင္းစပ္ အသုုံးျပဳျခင္း 
 
-Of course, you may also use the query builder aggregate functions.
 
-	$count = User::where('votes', '>', 100)->count();
+သင့္အေနျဖင့္  Query Builder function မ်ားျဖင့္ ေပါင္းစပ္ အသုုံးျပဳႏုုိင္သည္။
+
+$count = User::where('votes', '>', 100)->count();
 
 If you are unable to generate the query you need via the fluent interface, feel free to use `whereRaw`:
 
-	$users = User::whereRaw('age > ? and votes = 100', array(25))->get();
+$users = User::whereRaw('age > ? and votes = 100', array(25))->get();
 
 #### Chunking Results
 
 If you need to process a lot (thousands) of Eloquent records, using the `chunk` command will allow you to do without eating all of your RAM:
 
-	User::chunk(200, function($users)
-	{
-		foreach ($users as $user)
-		{
-			//
-		}
-	});
+User::chunk(200, function($users)
+{
+foreach ($users as $user)
+{
+//
+}
+});
 
 The first argument passed to the method is the number of records you wish to receive per "chunk". The Closure passed as the second argument will be called for each chunk that is pulled from the database.
 
@@ -114,7 +116,7 @@ The first argument passed to the method is the number of records you wish to rec
 
 You may also specify which database connection should be used when running an Eloquent query. Simply use the `on` method:
 
-	$user = User::on('connection-name')->find(1);
+$user = User::on('connection-name')->find(1);
 
 <a name="mass-assignment"></a>
 ## Mass Assignment
@@ -127,11 +129,11 @@ To get started, set the `fillable` or `guarded` properties on your model.
 
 The `fillable` property specifies which attributes should be mass-assignable. This can be set at the class or instance level.
 
-	class User extends Eloquent {
+class User extends Eloquent {
 
-		protected $fillable = array('first_name', 'last_name', 'email');
+protected $fillable = array('first_name', 'last_name', 'email');
 
-	}
+}
 
 In this example, only the three listed attributes will be mass-assignable.
 
@@ -139,11 +141,11 @@ In this example, only the three listed attributes will be mass-assignable.
 
 The inverse of `fillable` is `guarded`, and serves as a "black-list" instead of a "white-list":
 
-	class User extends Eloquent {
+class User extends Eloquent {
 
-		protected $guarded = array('id', 'password');
+protected $guarded = array('id', 'password');
 
-	}
+}
 
 > **Note:** When using `guarded`, you should still never pass `Input::get()` or any raw array of user controlled input into a `save` or `update` method, as any column that is not guarded may be updated.
 
@@ -151,7 +153,7 @@ The inverse of `fillable` is `guarded`, and serves as a "black-list" instead of 
 
 In the example above, the `id` and `password` attributes may **not** be mass assigned. All other attributes will be mass assignable. You may also block **all** attributes from mass assignment using the guard property:
 
-	protected $guarded = array('*');
+protected $guarded = array('*');
 
 <a name="insert-update-delete"></a>
 ## Insert, Update, Delete
@@ -160,11 +162,11 @@ To create a new record in the database from a model, simply create a new model i
 
 #### Saving A New Model
 
-	$user = new User;
+$user = new User;
 
-	$user->name = 'John';
+$user->name = 'John';
 
-	$user->save();
+$user->save();
 
 > **Note:** Typically, your Eloquent models will have auto-incrementing keys. However, if you wish to specify your own keys, set the `incrementing` property on your model to `false`.
 
@@ -172,46 +174,46 @@ You may also use the `create` method to save a new model in a single line. The i
 
 After saving or creating a new model that uses auto-incrementing IDs, you may retrieve the ID by accessing the object's `id` attribute:
 
-	$insertedId = $user->id;
+$insertedId = $user->id;
 
 #### Setting The Guarded Attributes On The Model
 
-	class User extends Eloquent {
+class User extends Eloquent {
 
-		protected $guarded = array('id', 'account_id');
+protected $guarded = array('id', 'account_id');
 
-	}
+}
 
 #### Using The Model Create Method
 
-	// Create a new user in the database...
-	$user = User::create(array('name' => 'John'));
+// Create a new user in the database...
+$user = User::create(array('name' => 'John'));
 
-	// Retrieve the user by the attributes, or create it if it doesn't exist...
-	$user = User::firstOrCreate(array('name' => 'John'));
+// Retrieve the user by the attributes, or create it if it doesn't exist...
+$user = User::firstOrCreate(array('name' => 'John'));
 
-	// Retrieve the user by the attributes, or instantiate a new instance...
-	$user = User::firstOrNew(array('name' => 'John'));
+// Retrieve the user by the attributes, or instantiate a new instance...
+$user = User::firstOrNew(array('name' => 'John'));
 
 #### Updating A Retrieved Model
 
 To update a model, you may retrieve it, change an attribute, and use the `save` method:
 
-	$user = User::find(1);
+$user = User::find(1);
 
-	$user->email = 'john@foo.com';
+$user->email = 'john@foo.com';
 
-	$user->save();
+$user->save();
 
 #### Saving A Model And Relationships
 
 Sometimes you may wish to save not only a model, but also all of its relationships. To do so, you may use the `push` method:
 
-	$user->push();
+$user->push();
 
 You may also run updates as queries against a set of models:
 
-	$affectedRows = User::where('votes', '>', 100)->update(array('status' => 2));
+$affectedRows = User::where('votes', '>', 100)->update(array('status' => 2));
 
 > **Note:** No model events are fired when updating a set of models via the Eloquent query builder.
 
@@ -219,46 +221,46 @@ You may also run updates as queries against a set of models:
 
 To delete a model, simply call the `delete` method on the instance:
 
-	$user = User::find(1);
+$user = User::find(1);
 
-	$user->delete();
+$user->delete();
 
 #### Deleting An Existing Model By Key
 
-	User::destroy(1);
+User::destroy(1);
 
-	User::destroy(array(1, 2, 3));
+User::destroy(array(1, 2, 3));
 
-	User::destroy(1, 2, 3);
+User::destroy(1, 2, 3);
 
 Of course, you may also run a delete query on a set of models:
 
-	$affectedRows = User::where('votes', '>', 100)->delete();
+$affectedRows = User::where('votes', '>', 100)->delete();
 
 #### Updating Only The Model's Timestamps
 
 If you wish to simply update the timestamps on a model, you may use the `touch` method:
 
-	$user->touch();
+$user->touch();
 
 <a name="soft-deleting"></a>
 ## Soft Deleting
 
 When soft deleting a model, it is not actually removed from your database. Instead, a `deleted_at` timestamp is set on the record. To enable soft deletes for a model, apply the `SoftDeletingTrait` to the model:
 
-	use Illuminate\Database\Eloquent\SoftDeletingTrait;
+use Illuminate\Database\Eloquent\SoftDeletingTrait;
 
-	class User extends Eloquent {
+class User extends Eloquent {
 
-		use SoftDeletingTrait;
+use SoftDeletingTrait;
 
-		protected $dates = ['deleted_at'];
+protected $dates = ['deleted_at'];
 
-	}
+}
 
 To add a `deleted_at` column to your table, you may use the `softDeletes` method from a migration:
 
-	$table->softDeletes();
+$table->softDeletes();
 
 Now, when you call the `delete` method on the model, the `deleted_at` column will be set to the current timestamp. When querying a model that uses soft deletes, the "deleted" models will not be included in query results.
 
@@ -266,42 +268,42 @@ Now, when you call the `delete` method on the model, the `deleted_at` column wil
 
 To force soft deleted models to appear in a result set, use the `withTrashed` method on the query:
 
-	$users = User::withTrashed()->where('account_id', 1)->get();
+$users = User::withTrashed()->where('account_id', 1)->get();
 
 The `withTrashed` method may be used on a defined relationship:
 
-	$user->posts()->withTrashed()->get();
+$user->posts()->withTrashed()->get();
 
 If you wish to **only** receive soft deleted models in your results, you may use the `onlyTrashed` method:
 
-	$users = User::onlyTrashed()->where('account_id', 1)->get();
+$users = User::onlyTrashed()->where('account_id', 1)->get();
 
 To restore a soft deleted model into an active state, use the `restore` method:
 
-	$user->restore();
+$user->restore();
 
 You may also use the `restore` method on a query:
 
-	User::withTrashed()->where('account_id', 1)->restore();
+User::withTrashed()->where('account_id', 1)->restore();
 
 Like with `withTrashed`, the `restore` method may also be used on relationships:
 
-	$user->posts()->restore();
+$user->posts()->restore();
 
 If you wish to truly remove a model from the database, you may use the `forceDelete` method:
 
-	$user->forceDelete();
+$user->forceDelete();
 
 The `forceDelete` method also works on relationships:
 
-	$user->posts()->forceDelete();
+$user->posts()->forceDelete();
 
 To determine if a given model instance has been soft deleted, you may use the `trashed` method:
 
-	if ($user->trashed())
-	{
-		//
-	}
+if ($user->trashed())
+{
+//
+}
 
 <a name="timestamps"></a>
 ## Timestamps
@@ -310,26 +312,26 @@ By default, Eloquent will maintain the `created_at` and `updated_at` columns on 
 
 #### Disabling Auto Timestamps
 
-	class User extends Eloquent {
+class User extends Eloquent {
 
-		protected $table = 'users';
+protected $table = 'users';
 
-		public $timestamps = false;
+public $timestamps = false;
 
-	}
+}
 
 #### Providing A Custom Timestamp Format
 
 If you wish to customize the format of your timestamps, you may override the `getDateFormat` method in your model:
 
-	class User extends Eloquent {
+class User extends Eloquent {
 
-		protected function getDateFormat()
-		{
-			return 'U';
-		}
+protected function getDateFormat()
+{
+return 'U';
+}
 
-	}
+}
 
 <a name="query-scopes"></a>
 ## Query Scopes
@@ -338,40 +340,40 @@ If you wish to customize the format of your timestamps, you may override the `ge
 
 Scopes allow you to easily re-use query logic in your models. To define a scope, simply prefix a model method with `scope`:
 
-	class User extends Eloquent {
+class User extends Eloquent {
 
-		public function scopePopular($query)
-		{
-			return $query->where('votes', '>', 100);
-		}
+public function scopePopular($query)
+{
+return $query->where('votes', '>', 100);
+}
 
-		public function scopeWomen($query)
-		{
-			return $query->whereGender('W');
-		}
+public function scopeWomen($query)
+{
+return $query->whereGender('W');
+}
 
-	}
+}
 
 #### Utilizing A Query Scope
 
-	$users = User::popular()->women()->orderBy('created_at')->get();
+$users = User::popular()->women()->orderBy('created_at')->get();
 
 #### Dynamic Scopes
 
 Sometimes You may wish to define a scope that accepts parameters. Just add your parameters to your scope function:
 
-	class User extends Eloquent {
+class User extends Eloquent {
 
-		public function scopeOfType($query, $type)
-		{
-			return $query->whereType($type);
-		}
+public function scopeOfType($query, $type)
+{
+return $query->whereType($type);
+}
 
-	}
+}
 
 Then pass the parameter into the scope call:
 
-	$users = User::ofType('member')->get();
+$users = User::ofType('member')->get();
 
 <a name="relationships"></a>
 ## Relationships
@@ -392,106 +394,106 @@ Of course, your database tables are probably related to one another. For example
 
 A one-to-one relationship is a very basic relation. For example, a `User` model might have one `Phone`. We can define this relation in Eloquent:
 
-	class User extends Eloquent {
+class User extends Eloquent {
 
-		public function phone()
-		{
-			return $this->hasOne('Phone');
-		}
+public function phone()
+{
+return $this->hasOne('Phone');
+}
 
-	}
+}
 
 The first argument passed to the `hasOne` method is the name of the related model. Once the relationship is defined, we may retrieve it using Eloquent's [dynamic properties](#dynamic-properties):
 
-	$phone = User::find(1)->phone;
+$phone = User::find(1)->phone;
 
 The SQL performed by this statement will be as follows:
 
-	select * from users where id = 1
+select * from users where id = 1
 
-	select * from phones where user_id = 1
+select * from phones where user_id = 1
 
 Take note that Eloquent assumes the foreign key of the relationship based on the model name. In this case, `Phone` model is assumed to use a `user_id` foreign key. If you wish to override this convention, you may pass a second argument to the `hasOne` method. Furthermore, you may pass a third argument to the method to specify which local column that should be used for the association:
 
-	return $this->hasOne('Phone', 'foreign_key');
+return $this->hasOne('Phone', 'foreign_key');
 
-	return $this->hasOne('Phone', 'foreign_key', 'local_key');
+return $this->hasOne('Phone', 'foreign_key', 'local_key');
 
 #### Defining The Inverse Of A Relation
 
 To define the inverse of the relationship on the `Phone` model, we use the `belongsTo` method:
 
-	class Phone extends Eloquent {
+class Phone extends Eloquent {
 
-		public function user()
-		{
-			return $this->belongsTo('User');
-		}
+public function user()
+{
+return $this->belongsTo('User');
+}
 
-	}
+}
 
 In the example above, Eloquent will look for a `user_id` column on the `phones` table. If you would like to define a different foreign key column, you may pass it as the second argument to the `belongsTo` method:
 
-	class Phone extends Eloquent {
+class Phone extends Eloquent {
 
-		public function user()
-		{
-			return $this->belongsTo('User', 'local_key');
-		}
+public function user()
+{
+return $this->belongsTo('User', 'local_key');
+}
 
-	}
+}
 
 Additionally, you pass a third parameter which specifies the name of the associated column on the parent table:
 
-	class Phone extends Eloquent {
+class Phone extends Eloquent {
 
-		public function user()
-		{
-			return $this->belongsTo('User', 'local_key', 'parent_key');
-		}
+public function user()
+{
+return $this->belongsTo('User', 'local_key', 'parent_key');
+}
 
-	}
+}
 
 <a name="one-to-many"></a>
 ### One To Many
 
 An example of a one-to-many relation is a blog post that "has many" comments. We can model this relation like so:
 
-	class Post extends Eloquent {
+class Post extends Eloquent {
 
-		public function comments()
-		{
-			return $this->hasMany('Comment');
-		}
+public function comments()
+{
+return $this->hasMany('Comment');
+}
 
-	}
+}
 
 Now we can access the post's comments through the [dynamic property](#dynamic-properties):
 
-	$comments = Post::find(1)->comments;
+$comments = Post::find(1)->comments;
 
 If you need to add further constraints to which comments are retrieved, you may call the `comments` method and continue chaining conditions:
 
-	$comments = Post::find(1)->comments()->where('title', '=', 'foo')->first();
+$comments = Post::find(1)->comments()->where('title', '=', 'foo')->first();
 
 Again, you may override the conventional foreign key by passing a second argument to the `hasMany` method. And, like the `hasOne` relation, the local column may also be specified:
 
-	return $this->hasMany('Comment', 'foreign_key');
+return $this->hasMany('Comment', 'foreign_key');
 
-	return $this->hasMany('Comment', 'foreign_key', 'local_key');
+return $this->hasMany('Comment', 'foreign_key', 'local_key');
 
 #### Defining The Inverse Of A Relation
 
 To define the inverse of the relationship on the `Comment` model, we use the `belongsTo` method:
 
-	class Comment extends Eloquent {
+class Comment extends Eloquent {
 
-		public function post()
-		{
-			return $this->belongsTo('Post');
-		}
+public function post()
+{
+return $this->belongsTo('Post');
+}
 
-	}
+}
 
 <a name="many-to-many"></a>
 ### Many To Many
@@ -500,129 +502,129 @@ Many-to-many relations are a more complicated relationship type. An example of s
 
 We can define a many-to-many relation using the `belongsToMany` method:
 
-	class User extends Eloquent {
+class User extends Eloquent {
 
-		public function roles()
-		{
-			return $this->belongsToMany('Role');
-		}
+public function roles()
+{
+return $this->belongsToMany('Role');
+}
 
-	}
+}
 
 Now, we can retrieve the roles through the `User` model:
 
-	$roles = User::find(1)->roles;
+$roles = User::find(1)->roles;
 
 If you would like to use an unconventional table name for your pivot table, you may pass it as the second argument to the `belongsToMany` method:
 
-	return $this->belongsToMany('Role', 'user_roles');
+return $this->belongsToMany('Role', 'user_roles');
 
 You may also override the conventional associated keys:
 
-	return $this->belongsToMany('Role', 'user_roles', 'user_id', 'foo_id');
+return $this->belongsToMany('Role', 'user_roles', 'user_id', 'foo_id');
 
 Of course, you may also define the inverse of the relationship on the `Role` model:
 
-	class Role extends Eloquent {
+class Role extends Eloquent {
 
-		public function users()
-		{
-			return $this->belongsToMany('User');
-		}
+public function users()
+{
+return $this->belongsToMany('User');
+}
 
-	}
+}
 
 <a name="has-many-through"></a>
 ### Has Many Through
 
 The "has many through" relation provides a convenient short-cut for accessing distant relations via an intermediate relation. For example, a `Country` model might have many `Posts` through a `Users` model. The tables for this relationship would look like this:
 
-	countries
-		id - integer
-		name - string
+countries
+id - integer
+name - string
 
-	users
-		id - integer
-		country_id - integer
-		name - string
+users
+id - integer
+country_id - integer
+name - string
 
-	posts
-		id - integer
-		user_id - integer
-		title - string
+posts
+id - integer
+user_id - integer
+title - string
 
 Even though the `posts` table does not contain a `country_id` column, the `hasManyThrough` relation will allow us to access a country's posts via `$country->posts`. Let's define the relationship:
 
-	class Country extends Eloquent {
+class Country extends Eloquent {
 
-		public function posts()
-		{
-			return $this->hasManyThrough('Post', 'User');
-		}
+public function posts()
+{
+return $this->hasManyThrough('Post', 'User');
+}
 
-	}
+}
 
 If you would like to manually specify the keys of the relationship, you may pass them as the third and fourth arguments to the method:
 
-	class Country extends Eloquent {
+class Country extends Eloquent {
 
-		public function posts()
-		{
-			return $this->hasManyThrough('Post', 'User', 'country_id', 'user_id');
-		}
+public function posts()
+{
+return $this->hasManyThrough('Post', 'User', 'country_id', 'user_id');
+}
 
-	}
+}
 
 <a name="polymorphic-relations"></a>
 ### Polymorphic Relations
 
 Polymorphic relations allow a model to belong to more than one other model, on a single association. For example, you might have a photo model that belongs to either a staff model or an order model. We would define this relation like so:
 
-	class Photo extends Eloquent {
+class Photo extends Eloquent {
 
-		public function imageable()
-		{
-			return $this->morphTo();
-		}
+public function imageable()
+{
+return $this->morphTo();
+}
 
-	}
+}
 
-	class Staff extends Eloquent {
+class Staff extends Eloquent {
 
-		public function photos()
-		{
-			return $this->morphMany('Photo', 'imageable');
-		}
+public function photos()
+{
+return $this->morphMany('Photo', 'imageable');
+}
 
-	}
+}
 
-	class Order extends Eloquent {
+class Order extends Eloquent {
 
-		public function photos()
-		{
-			return $this->morphMany('Photo', 'imageable');
-		}
+public function photos()
+{
+return $this->morphMany('Photo', 'imageable');
+}
 
-	}
+}
 
 #### Retrieving A Polymorphic Relation
 
 Now, we can retrieve the photos for either a staff member or an order:
 
-	$staff = Staff::find(1);
+$staff = Staff::find(1);
 
-	foreach ($staff->photos as $photo)
-	{
-		//
-	}
+foreach ($staff->photos as $photo)
+{
+//
+}
 
 #### Retrieving The Owner Of A Polymorphic Relation
 
 However, the true "polymorphic" magic is when you access the staff or order from the `Photo` model:
 
-	$photo = Photo::find(1);
+$photo = Photo::find(1);
 
-	$imageable = $photo->imageable;
+$imageable = $photo->imageable;
 
 The `imageable` relation on the `Photo` model will return either a `Staff` or `Order` instance, depending on which type of model owns the photo.
 
@@ -630,19 +632,19 @@ The `imageable` relation on the `Photo` model will return either a `Staff` or `O
 
 To help understand how this works, let's explore the database structure for a polymorphic relation:
 
-	staff
-		id - integer
-		name - string
+staff
+id - integer
+name - string
 
-	orders
-		id - integer
-		price - integer
+orders
+id - integer
+price - integer
 
-	photos
-		id - integer
-		path - string
-		imageable_id - integer
-		imageable_type - string
+photos
+id - integer
+path - string
+imageable_id - integer
+imageable_type - string
 
 The key fields to notice here are the `imageable_id` and `imageable_type` on the `photos` table. The ID will contain the ID value of, in this example, the owning staff or order, while the type will contain the class name of the owning model. This is what allows the ORM to determine which type of owning model to return when accessing the `imageable` relation.
 
@@ -653,49 +655,49 @@ The key fields to notice here are the `imageable_id` and `imageable_type` on the
 
 In addition to traditional polymorphic relations, you may also specify many-to-many polymorphic relations. For example, a blog `Post` and `Video` model could share a polymorphic relation to a `Tag` model. First, let's examine the table structure:
 
-	posts
-		id - integer
-		name - string
+posts
+id - integer
+name - string
 
-	videos
-		id - integer
-		name - string
+videos
+id - integer
+name - string
 
-	tags
-		id - integer
-		name - string
+tags
+id - integer
+name - string
 
-	taggables
-		tag_id - integer
-		taggable_id - integer
-		taggable_type - string
+taggables
+tag_id - integer
+taggable_id - integer
+taggable_type - string
 
 Next, we're ready to setup the relationships on the model. The `Post` and `Video` model will both have a `morphToMany` relationship via a `tags` method:
 
-	class Post extends Eloquent {
+class Post extends Eloquent {
 
-		public function tags()
-		{
-			return $this->morphToMany('Tag', 'taggable');
-		}
+public function tags()
+{
+return $this->morphToMany('Tag', 'taggable');
+}
 
-	}
+}
 
 The `Tag` model may define a method for each of its relationships:
 
-	class Tag extends Eloquent {
+class Tag extends Eloquent {
 
-		public function posts()
-		{
-			return $this->morphedByMany('Post', 'taggable');
-		}
+public function posts()
+{
+return $this->morphedByMany('Post', 'taggable');
+}
 
-		public function videos()
-		{
-			return $this->morphedByMany('Video', 'taggable');
-		}
+public function videos()
+{
+return $this->morphedByMany('Video', 'taggable');
+}
 
-	}
+}
 
 <a name="querying-relations"></a>
 ## Querying Relations
@@ -704,43 +706,43 @@ The `Tag` model may define a method for each of its relationships:
 
 When accessing the records for a model, you may wish to limit your results based on the existence of a relationship. For example, you wish to pull all blog posts that have at least one comment. To do so, you may use the `has` method:
 
-	$posts = Post::has('comments')->get();
+$posts = Post::has('comments')->get();
 
 You may also specify an operator and a count:
 
-	$posts = Post::has('comments', '>=', 3)->get();
+$posts = Post::has('comments', '>=', 3)->get();
 
 If you need even more power, you may use the `whereHas` and `orWhereHas` methods to put "where" conditions on your `has` queries:
 
-	$posts = Post::whereHas('comments', function($q)
-	{
-		$q->where('content', 'like', 'foo%');
+$posts = Post::whereHas('comments', function($q)
+{
+$q->where('content', 'like', 'foo%');
 
-	})->get();
+})->get();
 
 <a name="dynamic-properties"></a>
 ### Dynamic Properties
 
 Eloquent allows you to access your relations via dynamic properties. Eloquent will automatically load the relationship for you, and is even smart enough to know whether to call the `get` (for one-to-many relationships) or `first` (for one-to-one relationships) method.  It will then be accessible via a dynamic property by the same name as the relation. For example, with the following model `$phone`:
 
-	class Phone extends Eloquent {
+class Phone extends Eloquent {
 
-		public function user()
-		{
-			return $this->belongsTo('User');
-		}
+public function user()
+{
+return $this->belongsTo('User');
+}
 
-	}
+}
 
-	$phone = Phone::find(1);
+$phone = Phone::find(1);
 
 Instead of echoing the user's email like this:
 
-	echo $phone->user()->first()->email;
+echo $phone->user()->first()->email;
 
 It may be shortened to simply:
 
-	echo $phone->user->email;
+echo $phone->user->email;
 
 > **Note:** Relationships that return many results will return an instance of the `Illuminate\Database\Eloquent\Collection` class.
 
@@ -749,46 +751,46 @@ It may be shortened to simply:
 
 Eager loading exists to alleviate the N + 1 query problem. For example, consider a `Book` model that is related to `Author`. The relationship is defined like so:
 
-	class Book extends Eloquent {
+class Book extends Eloquent {
 
-		public function author()
-		{
-			return $this->belongsTo('Author');
-		}
+public function author()
+{
+return $this->belongsTo('Author');
+}
 
-	}
+}
 
 Now, consider the following code:
 
-	foreach (Book::all() as $book)
-	{
-		echo $book->author->name;
-	}
+foreach (Book::all() as $book)
+{
+echo $book->author->name;
+}
 
 This loop will execute 1 query to retrieve all of the books on the table, then another query for each book to retrieve the author. So, if we have 25 books, this loop would run 26 queries.
 
 Thankfully, we can use eager loading to drastically reduce the number of queries. The relationships that should be eager loaded may be specified via the `with` method:
 
-	foreach (Book::with('author')->get() as $book)
-	{
-		echo $book->author->name;
-	}
+foreach (Book::with('author')->get() as $book)
+{
+echo $book->author->name;
+}
 
 In the loop above, only two queries will be executed:
 
-	select * from books
+select * from books
 
-	select * from authors where id in (1, 2, 3, 4, 5, ...)
+select * from authors where id in (1, 2, 3, 4, 5, ...)
 
 Wise use of eager loading can drastically increase the performance of your application.
 
 Of course, you may eager load multiple relationships at one time:
 
-	$books = Book::with('author', 'publisher')->get();
+$books = Book::with('author', 'publisher')->get();
 
 You may even eager load nested relationships:
 
-	$books = Book::with('author.contacts')->get();
+$books = Book::with('author.contacts')->get();
 
 In the example above, the `author` relationship will be eager loaded, and the author's `contacts` relation will also be loaded.
 
@@ -796,29 +798,29 @@ In the example above, the `author` relationship will be eager loaded, and the au
 
 Sometimes you may wish to eager load a relationship, but also specify a condition for the eager load. Here's an example:
 
-	$users = User::with(array('posts' => function($query)
-	{
-		$query->where('title', 'like', '%first%');
+$users = User::with(array('posts' => function($query)
+{
+$query->where('title', 'like', '%first%');
 
-	}))->get();
+}))->get();
 
 In this example, we're eager loading the user's posts, but only if the post's title column contains the word "first".
 
 Of course, eager loading Closures aren't limited to "constraints". You may also apply orders:
 
-	$users = User::with(array('posts' => function($query)
-	{
-		$query->orderBy('created_at', 'desc');
+$users = User::with(array('posts' => function($query)
+{
+$query->orderBy('created_at', 'desc');
 
-	}))->get();
+}))->get();
 
 ### Lazy Eager Loading
 
 It is also possible to eagerly load related models directly from an already existing model collection. This may be useful when dynamically deciding whether to load related models or not, or in combination with caching.
 
-	$books = Book::all();
+$books = Book::all();
 
-	$books->load('author', 'publisher');
+$books->load('author', 'publisher');
 
 <a name="inserting-related-models"></a>
 ## Inserting Related Models
@@ -827,11 +829,11 @@ It is also possible to eagerly load related models directly from an already exis
 
 You will often need to insert new related models. For example, you may wish to insert a new comment for a post. Instead of manually setting the `post_id` foreign key on the model, you may insert the new comment from its parent `Post` model directly:
 
-	$comment = new Comment(array('message' => 'A new comment.'));
+$comment = new Comment(array('message' => 'A new comment.'));
 
-	$post = Post::find(1);
+$post = Post::find(1);
 
-	$comment = $post->comments()->save($comment);
+$comment = $post->comments()->save($comment);
 
 In this example, the `post_id` field will automatically be set on the inserted comment.
 
@@ -839,11 +841,11 @@ In this example, the `post_id` field will automatically be set on the inserted c
 
 When updating a `belongsTo` relationship, you may use the `associate` method. This method will set the foreign key on the child model:
 
-	$account = Account::find(10);
+$account = Account::find(10);
 
-	$user->account()->associate($account);
+$user->account()->associate($account);
 
-	$user->save();
+$user->save();
 
 ### Inserting Related Models (Many To Many)
 
@@ -851,93 +853,93 @@ You may also insert related models when working with many-to-many relations. Let
 
 #### Attaching Many To Many Models
 
-	$user = User::find(1);
+$user = User::find(1);
 
-	$user->roles()->attach(1);
+$user->roles()->attach(1);
 
 You may also pass an array of attributes that should be stored on the pivot table for the relation:
 
-	$user->roles()->attach(1, array('expires' => $expires));
+$user->roles()->attach(1, array('expires' => $expires));
 
 Of course, the opposite of `attach` is `detach`:
 
-	$user->roles()->detach(1);
+$user->roles()->detach(1);
 
 #### Using Sync To Attach Many To Many Models
 
 You may also use the `sync` method to attach related models. The `sync` method accepts an array of IDs to place on the pivot table. After this operation is complete, only the IDs in the array will be on the intermediate table for the model:
 
-	$user->roles()->sync(array(1, 2, 3));
+$user->roles()->sync(array(1, 2, 3));
 
 #### Adding Pivot Data When Syncing
 
 You may also associate other pivot table values with the given IDs:
 
-	$user->roles()->sync(array(1 => array('expires' => true)));
+$user->roles()->sync(array(1 => array('expires' => true)));
 
 Sometimes you may wish to create a new related model and attach it in a single command. For this operation, you may use the `save` method:
 
-	$role = new Role(array('name' => 'Editor'));
+$role = new Role(array('name' => 'Editor'));
 
-	User::find(1)->roles()->save($role);
+User::find(1)->roles()->save($role);
 
 In this example, the new `Role` model will be saved and attached to the user model. You may also pass an array of attributes to place on the joining table for this operation:
 
-	User::find(1)->roles()->save($role, array('expires' => $expires));
+User::find(1)->roles()->save($role, array('expires' => $expires));
 
 <a name="touching-parent-timestamps"></a>
 ## Touching Parent Timestamps
 
 When a model `belongsTo` another model, such as a `Comment` which belongs to a `Post`, it is often helpful to update the parent's timestamp when the child model is updated. For example, when a `Comment` model is updated, you may want to automatically touch the `updated_at` timestamp of the owning `Post`. Eloquent makes it easy. Just add a `touches` property containing the names of the relationships to the child model:
 
-	class Comment extends Eloquent {
+class Comment extends Eloquent {
 
-		protected $touches = array('post');
+protected $touches = array('post');
 
-		public function post()
-		{
-			return $this->belongsTo('Post');
-		}
+public function post()
+{
+return $this->belongsTo('Post');
+}
 
-	}
+}
 
 Now, when you update a `Comment`, the owning `Post` will have its `updated_at` column updated:
 
-	$comment = Comment::find(1);
+$comment = Comment::find(1);
 
-	$comment->text = 'Edit to this comment!';
+$comment->text = 'Edit to this comment!';
 
-	$comment->save();
+$comment->save();
 
 <a name="working-with-pivot-tables"></a>
 ## Working With Pivot Tables
 
 As you have already learned, working with many-to-many relations requires the presence of an intermediate table. Eloquent provides some very helpful ways of interacting with this table. For example, let's assume our `User` object has many `Role` objects that it is related to. After accessing this relationship, we may access the `pivot` table on the models:
 
-	$user = User::find(1);
+$user = User::find(1);
 
-	foreach ($user->roles as $role)
-	{
-		echo $role->pivot->created_at;
-	}
+foreach ($user->roles as $role)
+{
+echo $role->pivot->created_at;
+}
 
 Notice that each `Role` model we retrieve is automatically assigned a `pivot` attribute. This attribute contains a model representing the intermediate table, and may be used as any other Eloquent model.
 
 By default, only the keys will be present on the `pivot` object. If your pivot table contains extra attributes, you must specify them when defining the relationship:
 
-	return $this->belongsToMany('Role')->withPivot('foo', 'bar');
+return $this->belongsToMany('Role')->withPivot('foo', 'bar');
 
 Now the `foo` and `bar` attributes will be accessible on our `pivot` object for the `Role` model.
 
 If you want your pivot table to have automatically maintained `created_at` and `updated_at` timestamps, use the `withTimestamps` method on the relationship definition:
 
-	return $this->belongsToMany('Role')->withTimestamps();
+return $this->belongsToMany('Role')->withTimestamps();
 
 #### Deleting Records On A Pivot Table
 
 To delete all records on the pivot table for a model, you may use the `detach` method:
 
-	User::find(1)->roles()->detach();
+User::find(1)->roles()->detach();
 
 Note that this operation does not delete records from the `roles` table, but only from the pivot table.
 
@@ -945,16 +947,16 @@ Note that this operation does not delete records from the `roles` table, but onl
 
 Sometimes you may need to update your pivot table, but not detach it. If you wish to update your pivot table in place you may use `updateExistingPivot` method like so:
 
-	User::find(1)->roles()->updateExistingPivot($roleId, $attributes);
+User::find(1)->roles()->updateExistingPivot($roleId, $attributes);
 
 #### Defining A Custom Pivot Model
 
 Laravel also allows you to define a custom Pivot model. To define a custom model, first create your own "Base" model class that extends `Eloquent`. In your other Eloquent models, extend this custom base model instead of the default `Eloquent` base. In your base model, add the following function that returns an instance of your custom Pivot model:
 
-	public function newPivot(Model $parent, array $attributes, $table, $exists)
-	{
-		return new YourCustomPivot($parent, $attributes, $table, $exists);
-	}
+public function newPivot(Model $parent, array $attributes, $table, $exists)
+{
+return new YourCustomPivot($parent, $attributes, $table, $exists);
+}
 
 <a name="collections"></a>
 ## Collections
@@ -965,75 +967,75 @@ All multi-result sets returned by Eloquent, either via the `get` method or a `re
 
 For example, we may determine if a result set contains a given primary key using the `contains` method:
 
-	$roles = User::find(1)->roles;
+$roles = User::find(1)->roles;
 
-	if ($roles->contains(2))
-	{
-		//
-	}
+if ($roles->contains(2))
+{
+//
+}
 
 Collections may also be converted to an array or JSON:
 
-	$roles = User::find(1)->roles->toArray();
+$roles = User::find(1)->roles->toArray();
 
-	$roles = User::find(1)->roles->toJson();
+$roles = User::find(1)->roles->toJson();
 
 If a collection is cast to a string, it will be returned as JSON:
 
-	$roles = (string) User::find(1)->roles;
+$roles = (string) User::find(1)->roles;
 
 #### Iterating Collections
 
 Eloquent collections also contain a few helpful methods for looping and filtering the items they contain:
 
-	$roles = $user->roles->each(function($role)
-	{
-		//
-	});
+$roles = $user->roles->each(function($role)
+{
+//
+});
 
 #### Filtering Collections
 
 When filtering collections, the callback provided will be used as callback for [array_filter](http://php.net/manual/en/function.array-filter.php).
 
-	$users = $users->filter(function($user)
-	{
-		return $user->isAdmin();
-	});
+$users = $users->filter(function($user)
+{
+return $user->isAdmin();
+});
 
 > **Note:** When filtering a collection and converting it to JSON, try calling the `values` function first to reset the array's keys.
 
 #### Applying A Callback To Each Collection Object
 
-	$roles = User::find(1)->roles;
+$roles = User::find(1)->roles;
 
-	$roles->each(function($role)
-	{
-		//
-	});
-
-#### Sorting A Collection By A Value
-
-	$roles = $roles->sortBy(function($role)
-	{
-		return $role->created_at;
-	});
+$roles->each(function($role)
+{
+//
+});
 
 #### Sorting A Collection By A Value
 
-	$roles = $roles->sortBy('created_at');
+$roles = $roles->sortBy(function($role)
+{
+return $role->created_at;
+});
+
+#### Sorting A Collection By A Value
+
+$roles = $roles->sortBy('created_at');
 
 #### Returning A Custom Collection Type
 
 Sometimes, you may wish to return a custom Collection object with your own added methods. You may specify this on your Eloquent model by overriding the `newCollection` method:
 
-	class User extends Eloquent {
+class User extends Eloquent {
 
-		public function newCollection(array $models = array())
-		{
-			return new CustomCollection($models);
-		}
+public function newCollection(array $models = array())
+{
+return new CustomCollection($models);
+}
 
-	}
+}
 
 <a name="accessors-and-mutators"></a>
 ## Accessors & Mutators
@@ -1042,14 +1044,14 @@ Sometimes, you may wish to return a custom Collection object with your own added
 
 Eloquent provides a convenient way to transform your model attributes when getting or setting them. Simply define a `getFooAttribute` method on your model to declare an accessor. Keep in mind that the methods should follow camel-casing, even though your database columns are snake-case:
 
-	class User extends Eloquent {
+class User extends Eloquent {
 
-		public function getFirstNameAttribute($value)
-		{
-			return ucfirst($value);
-		}
+public function getFirstNameAttribute($value)
+{
+return ucfirst($value);
+}
 
-	}
+}
 
 In the example above, the `first_name` column has an accessor. Note that the value of the attribute is passed to the accessor.
 
@@ -1057,14 +1059,14 @@ In the example above, the `first_name` column has an accessor. Note that the val
 
 Mutators are declared in a similar fashion:
 
-	class User extends Eloquent {
+class User extends Eloquent {
 
-		public function setFirstNameAttribute($value)
-		{
-			$this->attributes['first_name'] = strtolower($value);
-		}
+public function setFirstNameAttribute($value)
+{
+$this->attributes['first_name'] = strtolower($value);
+}
 
-	}
+}
 
 <a name="date-mutators"></a>
 ## Date Mutators
@@ -1073,19 +1075,19 @@ By default, Eloquent will convert the `created_at`, `updated_at`, and `deleted_a
 
 You may customize which fields are automatically mutated, and even completely disable this mutation, by overriding the `getDates` method of the model:
 
-	public function getDates()
-	{
-		return array('created_at');
-	}
+public function getDates()
+{
+return array('created_at');
+}
 
 When a column is considered a date, you may set its value to a UNIX timestamp, date string (`Y-m-d`), date-time string, and of course a `DateTime` / `Carbon` instance.
 
 To totally disable date mutations, simply return an empty array from the `getDates` method:
 
-	public function getDates()
-	{
-		return array();
-	}
+public function getDates()
+{
+return array();
+}
 
 <a name="model-events"></a>
 ## Model Events
@@ -1098,25 +1100,25 @@ Whenever a new item is saved for the first time, the `creating` and `created` ev
 
 If `false` is returned from the `creating`, `updating`, `saving`, or `deleting` events, the action will be cancelled:
 
-	User::creating(function($user)
-	{
-		if ( ! $user->isValid()) return false;
-	});
+User::creating(function($user)
+{
+if ( ! $user->isValid()) return false;
+});
 
 #### Setting A Model Boot Method
 
 Eloquent models also contain a static `boot` method, which may provide a convenient place to register your event bindings.
 
-	class User extends Eloquent {
+class User extends Eloquent {
 
-		public static function boot()
-		{
-			parent::boot();
+public static function boot()
+{
+parent::boot();
 
-			// Setup event bindings...
-		}
+// Setup event bindings...
+}
 
-	}
+}
 
 <a name="model-observers"></a>
 ## Model Observers
@@ -1125,23 +1127,23 @@ To consolidate the handling of model events, you may register a model observer. 
 
 So, for example, a model observer might look like this:
 
-	class UserObserver {
+class UserObserver {
 
-		public function saving($model)
-		{
-			//
-		}
+public function saving($model)
+{
+//
+}
 
-		public function saved($model)
-		{
-			//
-		}
+public function saved($model)
+{
+//
+}
 
-	}
+}
 
 You may register an observer instance using the `observe` method:
 
-	User::observe(new UserObserver);
+User::observe(new UserObserver);
 
 <a name="converting-to-arrays-or-json"></a>
 ## Converting To Arrays / JSON
@@ -1150,55 +1152,56 @@ You may register an observer instance using the `observe` method:
 
 When building JSON APIs, you may often need to convert your models and relationships to arrays or JSON. So, Eloquent includes methods for doing so. To convert a model and its loaded relationship to an array, you may use the `toArray` method:
 
-	$user = User::with('roles')->first();
+$user = User::with('roles')->first();
 
-	return $user->toArray();
+return $user->toArray();
 
 Note that entire collections of models may also be converted to arrays:
 
-	return User::all()->toArray();
+return User::all()->toArray();
 
 #### Converting A Model To JSON
 
 To convert a model to JSON, you may use the `toJson` method:
 
-	return User::find(1)->toJson();
+return User::find(1)->toJson();
 
 #### Returning A Model From A Route
 
 Note that when a model or collection is cast to a string, it will be converted to JSON, meaning you can return Eloquent objects directly from your application's routes!
 
-	Route::get('users', function()
-	{
-		return User::all();
-	});
+Route::get('users', function()
+{
+return User::all();
+});
 
 #### Hiding Attributes From Array Or JSON Conversion
 
 Sometimes you may wish to limit the attributes that are included in your model's array or JSON form, such as passwords. To do so, add a `hidden` property definition to your model:
 
-	class User extends Eloquent {
+class User extends Eloquent {
 
-		protected $hidden = array('password');
+protected $hidden = array('password');
 
-	}
+}
 
 > **Note:** When hiding relationships, use the relationship's **method** name, not the dynamic accessor name.
 
 Alternatively, you may use the `visible` property to define a white-list:
 
-	protected $visible = array('first_name', 'last_name');
+protected $visible = array('first_name', 'last_name');
 
 <a name="array-appends"></a>
 Occasionally, you may need to add array attributes that do not have a corresponding column in your database. To do so, simply define an accessor for the value:
 
-	public function getIsAdminAttribute()
-	{
-		return $this->attributes['admin'] == 'yes';
-	}
+public function getIsAdminAttribute()
+{
+return $this->attributes['admin'] == 'yes';
+}
 
 Once you have created the accessor, just add the value to the `appends` property on the model:
 
-	protected $appends = array('is_admin');
+protected $appends = array('is_admin');
 
 Once the attribute has been added to the `appends` list, it will be included in both the model's array and JSON forms.
+z
