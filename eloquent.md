@@ -666,15 +666,15 @@ path - string
 imageable_id - integer
 imageable_type - string
 
-
-The key fields to notice here are the `imageable_id` and `imageable_type` on the `photos` table. The ID will contain the ID value of, in this example, the owning staff or order, while the type will contain the class name of the owning model. This is what allows the ORM to determine which type of owning model to return when accessing the `imageable` relation.
+Key field အေနျဖင့္  `photos` table မွ `imageable_id` ႏွင့္ `imageable_type` တုိ ့ကုိ မွတ္သားထားရပါမည္ ျဖစ္သည္။ ID မွာ Order သုိ ့မဟုတ္ 
+Staff တုိ ့၏  ID ႏွင့္ ခ်ိတ္ဆက္ထားမည္ ျဖစ္သည္။  ORM အေနျဖင့္ မည္သည့္ model ကုိျပန္ရမည္ ဆုိသည္ကုိ `imageable` ၏ relation ကို ေထာက္ရႈ၍ လုပ္ေဆာင္ သြားမည္ ျဖစ္သည္။
 
 <a name="many-to-many-polymorphic-relations"></a>
 ### Many To Many Polymorphic Relations
 
-#### Polymorphic Many To Many Relation Table Structure
+#### Polymorphic Many To Many Relation Table Structure  
 
-In addition to traditional polymorphic relations, you may also specify many-to-many polymorphic relations. For example, a blog `Post` and `Video` model could share a polymorphic relation to a `Tag` model. First, let's examine the table structure:
+သမရုိးက် polymorphic relations တစ္ခုသာမက many-to-many polymorphic relations မ်ားကိုပါ တည္ေဆာက္ႏုိင္သည္။ ဥပမာ blog တစ္ခု၏ database structure ျဖစ္ေသာ  `Post` ႏွင့္ `Video` model တုိ ့တြင္ `Tag` model ကုိ တူညီစြာ polymorphic relation အေနျဖင့္ ခ်ိတ္ဆက္ရန္ လုိေပမည္။ ေရွဦးစြာ table structure ကုိၾကည့္လုိက္ပါ။
 
 posts
 id - integer
@@ -693,7 +693,8 @@ tag_id - integer
 taggable_id - integer
 taggable_type - string
 
-Next, we're ready to setup the relationships on the model. The `Post` and `Video` model will both have a `morphToMany` relationship via a `tags` method:
+အထက္ပါ table အတြက္ relationship မ်ားကုိ model တြင္ ေအာက္ပါအတုိင္း တည္ေဆာက္ရမည္ျဖစ္သည္။ `Post` ႏွင့္ `Video` model တုိ ့ႏွစ္ခုလုံးတြင္
+`tags` method မွ `morphToMany` relationship ကုိ ေၾကညာေပးရမည္ ျဖစ္သည္။
 
 class Post extends Eloquent {
 
@@ -725,16 +726,15 @@ return $this->morphedByMany('Video', 'taggable');
 
 #### Relations မ်ားတြင္ Select ကုိ အသုံးျပဳျခင္း
 
-
-When accessing the records for a model, you may wish to limit your results based on the existence of a relationship. For example, you wish to pull all blog posts that have at least one comment. To do so, you may use the `has` method:
+Model မ်ားမွ record မ်ားကုိ access ျပဳလုပ္ရာတြင္ ၊  result မ်ားကို စစ္ေဆးျပီးမွ ထုတ္ယူလုိသည့္ အေနအထားမ်ိဳးတြင္ ရွိေပႏုိင္သည္။ ဥပမာ သင့္အေနျဖင့္ Comment တစ္ခု အနည္းဆုံး ရွိသည့္ blog post မ်ားကုိ ဆြဲထုတ္လုိသည္ ဆုိပါစို ့။  သင့္အေနနဲ ့ `has` method ကုိ အသုံးျပဳရမည္ ျဖစ္သည္။
 
 $posts = Post::has('comments')->get();
 
-You may also specify an operator and a count:
+has method တြင္ သင့္အေနျဖင့္ operator မ်ား ႏွင့္  ထုတ္ယူလုိသည့္ အေရအတြက္ကုိ သတ္မွတ္ႏုိင္သည္။
 
 $posts = Post::has('comments', '>=', 3)->get();
 
-If you need even more power, you may use the `whereHas` and `orWhereHas` methods to put "where" conditions on your `has` queries:
+သင့္အေနျဖင့္ ပုိ၍ အေသးစိတ္က်ျပီး "where" conditions မ်ားကုိ `has` queries အတြင္း စစ္ေဆးလုိပါက `whereHas` ႏွင့္ `orWhereHas` method မ်ားကုိအသုံးျပဳႏုိင္သည္။
 
 $posts = Post::whereHas('comments', function($q)
 {
@@ -745,7 +745,9 @@ $q->where('content', 'like', 'foo%');
 <a name="dynamic-properties"></a>
 ### Dynamic Properties
 
-Eloquent allows you to access your relations via dynamic properties. Eloquent will automatically load the relationship for you, and is even smart enough to know whether to call the `get` (for one-to-many relationships) or `first` (for one-to-one relationships) method.  It will then be accessible via a dynamic property by the same name as the relation. For example, with the following model `$phone`:
+
+Eloquent တြင္ သင့္အေနျဖင့္ relations မ်ားမွ properties မ်ားကုိ dynamic properties အေနျဖင့္ ဆြဲယူႏုိင္သည္။ Eloquent အေနျဖင့္ သင့္၏ relationship အလုိအေလ်ာက္အေနျဖင့္ relations ကုိ အလိုအေလ်ာက္ load လုပ္ကာ ေခၚယူမည္ ျဖစ္ျပီး  `get` ( one-to-many relationships) ေပေလာ၊ `first` (for one-to-one relationships) method ေပေလာ ကုိပင္ ခြဲျခားလုပ္ေဆာင္ေပးမည္ ျဖစ္သည္။ ထုိေနာက္ တူညီေသာ အမည္မွ တဆင့္
+dynamic property ကုိ အလြယ္တကူ ေခၚဆုိ ႏုိင္ေပမည္။ ဥပမာ `$phone` ဟုသည့္ model မွ တဆင့္
 
 class Phone extends Eloquent {
 
@@ -766,12 +768,13 @@ It may be shortened to simply:
 
 echo $phone->user->email;
 
-> **Note:** Relationships that return many results will return an instance of the `Illuminate\Database\Eloquent\Collection` class.
+> **Note:** Relationships မ်ားကုိ return ျပန္ေသာ result မ်ားကုိ အလုပ္လုပ္သြားေသာ method မွာ `Illuminate\Database\Eloquent\Collection` class မွ instance မ်ားကုိ ျပန္ျခင္းျဖစ္သည္။
 
 <a name="eager-loading"></a>
 ## Eager Loading
 
-Eager loading exists to alleviate the N + 1 query problem. For example, consider a `Book` model that is related to `Author`. The relationship is defined like so:
+
+Eager loading exists to N+1 query ကဲ့သို ့ေသာ Query မ်ားကုိ ပုိ ့၍ ေပါ့ပါးစြာ အသုံးျပဳႏုိင္ရန္ ျဖစ္သည္။ ဥပမာ `Author` model ႏွင့္ `Book` model တုိ ့ ဆက္စပ္ေနသည္ ဆုိပါစုိ ့။ ၄င္းတုိ ့၏ relationship ကုိ ေအာက္ပါ အတိုင္း သတ္မွတ္ႏုိင္ပါသည္။ 
 
 class Book extends Eloquent {
 
@@ -782,43 +785,43 @@ return $this->belongsTo('Author');
 
 }
 
-Now, consider the following code:
+ထုိေနာက္ ေအာက္ပါ code ကုိ ၾကည့္ၾကည့္ပါ။
 
 foreach (Book::all() as $book)
 {
 echo $book->author->name;
 }
 
-This loop will execute 1 query to retrieve all of the books on the table, then another query for each book to retrieve the author. So, if we have 25 books, this loop would run 26 queries.
+ထုိ loop မွာ Book မွ ရွိသမွ် စာအုပ္တုိင္းကုိ ေခၚယူမည္ ျဖစ္သည္။ ထုိေနာက္ ထုိေနာက္ ထုိေနာက္ ေနာက္ query တစ္ခုအေနျဖင့္ စာအုပ္တစ္ခုခ်င္းဆီ၏ 
+author ကုိ  ေဖာ္ျပသြားမည္ ျဖစ္သည္။ အကယ္၍ စာအုပ္ ၂၅ အုပ္ ရွိသည္ ဆုိပါစုိ ့ ၊ query ၂၆ ေၾကာင္း run ျဖစ္သည္။ သုိ ့ပင္ေသာ္ညား eager loading ၏ အက်ိဳးေက်းဇူးေၾကာင့္ မလုိအပ္ေသာ query မ်ားကုိ ေလွ်ာ့ခ်ႏုိင္သည္။ ထုိ relationship တြင္ `with` method အသုံးျပဳ၍ eager load ျပဳလုပ္ႏုိင္သည္။
 
-Thankfully, we can use eager loading to drastically reduce the number of queries. The relationships that should be eager loaded may be specified via the `with` method:
 
 foreach (Book::with('author')->get() as $book)
 {
 echo $book->author->name;
 }
 
-In the loop above, only two queries will be executed:
+အထက္ပါ loop တြင္မူ query ႏွစ္ေၾကာင္းသာ execute ျပဳလုပ္မည္ ျဖစ္သည္။
 
 select * from books
 
 select * from authors where id in (1, 2, 3, 4, 5, ...)
 
-Wise use of eager loading can drastically increase the performance of your application.
+Eager loading ကုိ အသုံးျပဳျခင္း အားျဖင့္ သင့္ application ၏ performance ကုိ သိသိသာသာ ျမင့္တက္ေစမည္ ျဖစ္သည္။
 
-Of course, you may eager load multiple relationships at one time:
+ထုိအျပင္ တစ္ခုထက္ပုိေသာ relation မ်ားတြင္ တခ်ိန္တည္းတြင္ eager load အသုံးျပဳႏုိင္မည္ ျဖစ္သည္။
 
 $books = Book::with('author', 'publisher')->get();
 
-You may even eager load nested relationships:
+Nested relationship မ်ားတြင္လည္း eager load အသုံးျပဳႏုိင္သည္။
 
 $books = Book::with('author.contacts')->get();
 
-In the example above, the `author` relationship will be eager loaded, and the author's `contacts` relation will also be loaded.
+အထက္ ဥပမာ တြင္ `author` ႏွင့္ ပတ္သတ္ေနသည္မ်ားကုိ eager load ျပဳလုပ္ျပီး author ၏ `contacts` relation ပါ load သြားမည္ ျဖစ္သည္။
 
-### Eager Load Constraints
+### Eager Load အကန္ ့အသတ္မ်ား 
 
-Sometimes you may wish to eager load a relationship, but also specify a condition for the eager load. Here's an example:
+ထခါတရံ condition မ်ား စစ္ေဆးျပီးမွ relationship မ်ားကို eager load ျပဳလုပ္လုိမည္ အခ်ိန္ကာလ လည္း ရွိေပမည္။ ေအာက္က ဥပမာတြင္ ဆုိပါစို ့
 
 $users = User::with(array('posts' => function($query)
 {
@@ -826,9 +829,7 @@ $query->where('title', 'like', '%first%');
 
 }))->get();
 
-In this example, we're eager loading the user's posts, but only if the post's title column contains the word "first".
-
-Of course, eager loading Closures aren't limited to "constraints". You may also apply orders:
+ထုိ ဥပမာ တြင္ user's post တြင္းမွ  "first"  စကာလုံး ႏွင့္စတင္သည္မ်ားကိုသာ eager load လုပ္သြားမည္ ျဖစ္သည္။ Closure မ်ား အတြင္းတြင္မူ အကန့္ အသတ္မရွိေပ။  သင့္အေနျဖင့္ ေအာက္က အတုိင္း order အလုိက္ စီရီႏုိင္ေပဦးမည္။
 
 $users = User::with(array('posts' => function($query)
 {
@@ -838,7 +839,7 @@ $query->orderBy('created_at', 'desc');
 
 ### Lazy Eager Loading
 
-It is also possible to eagerly load related models directly from an already existing model collection. This may be useful when dynamically deciding whether to load related models or not, or in combination with caching.
+တည္ရွိေနျပီးေသာ model collection မ်ားထဲမွ eager load ႏွင့္ ဆက္စပ္ေနေသာ model မ်ားကုိ တုိက္ရုိက္ ေခၚယူ၍လည္း ျဖစ္ႏုိင္ေပသည္။ ထုိသုိ ့ျပဳလုပ္ျခင္း Model မ်ားကို Load လုပ္ရာတြင္ load လုပ္မည္ မလုပ္မည္ကုိ dynamically စဥ္းစားဆုံးျဖတ္ရာတြင္ ေသာ္လည္းေကာင္း ၊ caching ျဖင့္ ပူးေပါင္း အသုံးျပဳရာတြင္ေသာ္လည္းေကာင္း အသုံးဝင္သည္။
 
 $books = Book::all();
 
@@ -847,9 +848,9 @@ $books->load('author', 'publisher');
 <a name="inserting-related-models"></a>
 ## Inserting Related Models
 
-#### Attaching A Related Model
+#### ဆက္စပ္ေနသည့္ Model တစ္ခုႏွင့္ ခ်ိတ္ဆက္ျခင္း
 
-You will often need to insert new related models. For example, you may wish to insert a new comment for a post. Instead of manually setting the `post_id` foreign key on the model, you may insert the new comment from its parent `Post` model directly:
+တခါတရံ ဆက္စပ္ေနသည့္ model မ်ားအား insert ျပဳလုပ္ရန္လည္း လုိေပမည္။ ဥပမာ သင့္အေနျဖင့္ post တစ္ခုတြင္ comment တစ္ခုကုိ ထည့္သြင္းမည္ ဆုိပါစုိ ့။  Model တစ္ခု၏ `post_id` foreign key ကုိ manually ထည့္သြင္းေနမည့္ အစား `Post` model ဖက္မွ တုိက္ရုိက္ထည့္သြင္း၍လည္း ရေပသည္။
 
 $comment = new Comment(array('message' => 'A new comment.'));
 
@@ -857,9 +858,10 @@ $post = Post::find(1);
 
 $comment = $post->comments()->save($comment);
 
-In this example, the `post_id` field will automatically be set on the inserted comment.
+အထက္က ဥပမာတြင္ `post_id` field ကုိ အလုိအေလ်ာက္ ထည့္သြင္းသြားမည္ ျဖစ္သည္။
 
 ### Associating Models (Belongs To)
+
 
 When updating a `belongsTo` relationship, you may use the `associate` method. This method will set the foreign key on the child model:
 
@@ -1168,38 +1170,39 @@ You may register an observer instance using the `observe` method:
 User::observe(new UserObserver);
 
 <a name="converting-to-arrays-or-json"></a>
-## Converting To Arrays / JSON
+## Arrays / JSON သုိ ့ေျပာင္းလဲ အသုံးျပဳျခင္း
 
 #### Converting A Model To An Array
 
-When building JSON APIs, you may often need to convert your models and relationships to arrays or JSON. So, Eloquent includes methods for doing so. To convert a model and its loaded relationship to an array, you may use the `toArray` method:
+JSON APIs မ်ား တည္ေဆာက္ရာတြင္ ၊ သင့္ အေနျဖင့္ model ႏွင့္ ဆက္စပ္ပတ္သတ္သည္မ်ားကို array အေနျဖင့္ေသာ လည္းေကာင္း JSON အေနျဖင့္ေသာ္ လည္းေကာင္း ထုတ္ေပးလုိသည့္ အခ်ိန္ကာလ မ်ား ရွိေပမည္။ Eloquent အေနျဖင့္ ထုိသုိ ့ျပဳလုပ္ႏုိင္ရန္ ေထာက္ပံ့ေပးေသာ method မ်ားလည္း ရွိေပသည္။ ထုိသုိ ့ ၄င္းႏွင့္ တကြ ဆက္စပ္ပတ္သတ္ေနသည္မ်ားကိုပါက array အျဖစ္ေျပာင္းလဲ ႏုိင္ရန္ `toArray` method ကုိ အသုံးျပဳႏုိင္သည္။
 
 $user = User::with('roles')->first();
 
 return $user->toArray();
 
-Note that entire collections of models may also be converted to arrays:
+Models connection တစ္ခုလုံးပါ array အျဖစ္ ေျပာင္းလဲသြားသည္ကုိ သတိျပဳရမည္။ 
 
 return User::all()->toArray();
 
-#### Converting A Model To JSON
+#### Model တစ္ခုကုိ JSON သုိ ့ ေျပာင္းလဲျခင္း
 
-To convert a model to JSON, you may use the `toJson` method:
+Model တစ္ခုကုိ JSON အေနျဖင့္ ေျပာင္းလဲလုိပါက `toJson` method ကုိ အသုံးျပဳႏုိင္သည္။
 
 return User::find(1)->toJson();
 
-#### Returning A Model From A Route
+#### Route တစ္ခုမွ Model ကုိ return ျပန္ျခင္း  
 
-Note that when a model or collection is cast to a string, it will be converted to JSON, meaning you can return Eloquent objects directly from your application's routes!
+Model သုိ ့မဟုတ္ collection တစ္ခုသည္ string အျဖစ္သုိ ့ cast အလုပ္ခံရပါက အလုိအေလ်ာက္ JSON အျဖစ္သုိ ့ေျပာင္းလဲသြားမည္ ျဖစ္သည္။ 
+ထုိ ့ေၾကာင့္ သင့္ application route မွ တုိက္ရုိက္ return ျပန္၍လည္း ရႏုိင္သည္။
 
 Route::get('users', function()
 {
 return User::all();
 });
 
-#### Hiding Attributes From Array Or JSON Conversion
+#### Array သုိ ့မဟုတ္ JSON သုိ ့ေျပာင္းလဲရာတြင္ Attribute တစ္ခ်ိဳ  ့ကုိ ေဖ်ာက္ထားျခင္း
 
-Sometimes you may wish to limit the attributes that are included in your model's array or JSON form, such as passwords. To do so, add a `hidden` property definition to your model:
+တခါတရံ သင့္အေနျဖင့္ တခ်ိဳ  ့ေသာ attribute မ်ားကို array သုိ ့မဟုတ္ JSON သုိ ့ေျပာင္းလဲရာတြင္ ပါမလာ ေစခ်င္သည့္ attribute မ်ား (ဥပမာ password မ်ားကဲ့သုိ ့ေသာ ) ရွိေပမည္။ ထုိသုိ ့ျပဳလုပ္ႏုိင္ရန္ model အတြင္းတြင္ `hidden` ဟူေသာ property တစ္ခုအျဖစ္ ေၾကညာေပးရန္ လုိေပမည္။
 
 class User extends Eloquent {
 
@@ -1209,7 +1212,7 @@ protected $hidden = array('password');
 
 > **Note:** When hiding relationships, use the relationship's **method** name, not the dynamic accessor name.
 
-Alternatively, you may use the `visible` property to define a white-list:
+အျပန္အလွန္အားျဖင့္ သင့္အေနျဖင့္ ထုတ္ခ်င္သည္မ်ားကိုသာ ေဖာ္ျပႏုိင္ရန္ `visible` ဟုသည္ property တစ္ခု ေၾကညာႏုိင္ေပသည္။
 
 protected $visible = array('first_name', 'last_name');
 
@@ -1226,4 +1229,3 @@ Once you have created the accessor, just add the value to the `appends` property
 protected $appends = array('is_admin');
 
 Once the attribute has been added to the `appends` list, it will be included in both the model's array and JSON forms.
-z
