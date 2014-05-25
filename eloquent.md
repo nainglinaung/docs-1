@@ -666,6 +666,7 @@ path - string
 imageable_id - integer
 imageable_type - string
 
+
 The key fields to notice here are the `imageable_id` and `imageable_type` on the `photos` table. The ID will contain the ID value of, in this example, the owning staff or order, while the type will contain the class name of the owning model. This is what allows the ORM to determine which type of owning model to return when accessing the `imageable` relation.
 
 <a name="many-to-many-polymorphic-relations"></a>
@@ -703,7 +704,7 @@ return $this->morphToMany('Tag', 'taggable');
 
 }
 
-The `Tag` model may define a method for each of its relationships:
+`Tag` model အေနျဖင့္ ၄င္း၏ relationships ကုိ ေအာက္ပါ အတုိင္း သတ္မွတ္ႏုိင္သည္။ 
 
 class Tag extends Eloquent {
 
@@ -720,9 +721,10 @@ return $this->morphedByMany('Video', 'taggable');
 }
 
 <a name="querying-relations"></a>
-## Querying Relations
+## Relation မ်ားကုိ Query ျပဳလုပ္ျခင္း
 
-#### Querying Relations When Selecting
+#### Relations မ်ားတြင္ Select ကုိ အသုံးျပဳျခင္း
+
 
 When accessing the records for a model, you may wish to limit your results based on the existence of a relationship. For example, you wish to pull all blog posts that have at least one comment. To do so, you may use the `has` method:
 

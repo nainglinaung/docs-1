@@ -54,16 +54,17 @@ Framework ကုိ install ျပဳလုပ္ျပီးေနာက္ သ
 ထုိေနာက္ web browser ေပၚတြင္ `/users` ဟူေသာ route ျဖင့္ စမ္းၾကည့္ပါက သင့္အေနျဖင့္ `Users!` တုံ ့ျပန္သည္ကို ျမင္ေတြ ့ရမည္ ျဖစ္သည္။ 
 ေကာင္းေလစြ! သင့္အေနျဖင့္ ပထမဦးစြာ route တစ္ခုကို ဖန္တီးလုိက္ျပီ ျဖစ္သည္။
 
-Routes can also be attached to controller classes. For example:
+
+Route မ်ားမွာ controller မ်ားႏွင့္လည္း ခ်ိတ္ဆက္ အလုပ္လုပ္ႏိုင္သည္။ ဥပမာ
 
 	Route::get('users', 'UserController@getIndex');
 
-This route informs the framework that requests to the `/users` route should call the `getIndex` method on the `UserController` class. For more information on controller routing, check out the [controller documentation](/docs/controllers).
+အဆုိပါ route တြင္ 	`/users` ဟုေခၚယူလုိက္ပါက `UserController` class အတြင္းရွိ `getIndex` method  ကုိ အလုပ္လုပ္မည္ ျဖစ္သည္။ Controller routing ႏွင့္ ပတ္သတ္၍ အေသးစိတ္ကုိ [controller documentation](/docs/controllers) တြင္ၾကည့္ရႈႏုိင္သည္။
 
 <a name="creating-a-view"></a>
-## Creating A View
+## View တစ္ခု တည္ေဆာက္ျခင္း
 
-Next, we'll create a simple view to display our user data. Views live in the `app/views` directory and contain the HTML of your application. We're going to place two new views in this directory: `layout.blade.php` and `users.blade.php`. First, let's create our `layout.blade.php` file:
+ထုိေနာက္ user data မ်ားကို ေဖာ္ျပရန္ ရုိးရွင္းသည့္ view တစ္ခုကို တည္ေဆာက္ရန္ လုိေပမည္။  view file မ်ားသည္ `app/views` directory  ထဲတြင္ တည္ရွိမည္ ျဖစ္သည္။  View တြင္ သင့္ application တြင္ ေဖာ္ျပလုိသည့္  HTML ျဖင့္ ေဖာ္ျပသြားမည္ ျဖစ္သည္။  `layout.blade.php` ႏွင့္ `users.blade.php` ဟု၍ file ႏွစ္ခုကို တည္ေဆာက္လုိက္ပါ။ `layout.blade.php` ဟုသည့္ file တြင္ ေအာက္ပါ အတုိင္း ေရးသားလုိက္ပါ။
 
 	<html>
 		<body>
